@@ -34,6 +34,18 @@ importOneXLSX <- function(station, polutant, year, noHours, path = getwd(), skip
     }
   }
 
+  tmpFrame <- as_tibble(read_excel(srcFile, skip = skip, col_names = FALSE))
+  colnames(tmpFrame) <- colNames
+  colnames(tmpFrame)[1] <- "measDate"
+  tmpFrame <- ramka[, c("measDate", stacja)]
+  colnames(tmpFrame)[2] <- "measurement"
+
+  tmpFrame %>%
+    mutate(measurement = str_replace_all(measurement, ",", ".")) %>%
+    mutate(measurement = as.numeric(measurement),
+	   station = station,
+	   polutant = polutant)
+
 }
 
 
