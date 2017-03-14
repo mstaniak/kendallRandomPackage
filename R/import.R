@@ -63,6 +63,20 @@ importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, noHours 
 			       path = getwd(), skip = 3, exact = FALSE) {
   if(!exact & (is.null(polutants) | is.null(years))) stop("Years and polutants must be given if exact = FALSE")
   if(exact & path == getwd()) stop("Paths to files must be given if exact = TRUE")
+
+  tmpResult <- vector("list", length(polutants)*length(years))
+  for(i in polutants) {
+    for(j in years) {
+      tmpResult[[paste0(i, j)]] <- importOneXLSX(station, i, j, noHours, path, skip, exact)
+    }
+  }
+  tmpResult %>%
+    bind_rows() %>%
+    select(station, polutants, measDate, measurement) %>%
+    mutate(measDate = ymd_hms(measDate)) %>%
+    mutate(measDate = round_date(measDate, unit = "hour")) %>%
+    filter(year(measDate) %in% years)
+
 }
 
 
