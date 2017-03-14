@@ -1,6 +1,20 @@
+#' Import one file from GIOŚ .xlsx file.
+#'
+#' @param station chr, name of the chosen station.
+#' @param polutant chr, name of chosen polutant.
+#' @param year chr, chosen year (yyyy).
+#' @param noHours chr, 1 or 24, defaults to 1 (hourly meas.)
+#' @param path chr, path to folder containing .xlsx file or path to .xlsx file.
+#' @param skip int, number of rows to skip, defaults to 3.
+#'        Do not change if unchanged GIOŚ files are used.
+#' @param exact lgl, TRUE if path is a path to .xlsx file.
+#'
+#' @return tibble
+#'
 
 
-importOneXLSX <- function(station, polutant, year, noHours, path = getwd(), skip, exact = FALSE) {
+importOneXLSX <- function(station, polutant, year, noHours, 
+			  path = getwd(), skip = 3, exact = FALSE) {
   
   fileList <- character(0)
   if(exact) fileList <- path
@@ -49,11 +63,18 @@ importOneXLSX <- function(station, polutant, year, noHours, path = getwd(), skip
 }
 
 
-
+#' Import data for one station, multiple years and polutants.
 #'
+#' @param station chr, name of the chosen station.
+#' @param polutants chr, names of chosen polutants.
+#' @param years chr, chosen years (yyyy).
+#' @param noHours chr, 1 or 24, defaults to 1 (hourly meas.)
+#' @param path chr, path to folder containing .xlsx file or path to .xlsx file.
+#' @param skip int, number of rows to skip, defaults to 3.
+#'        Do not change if unchanged GIOŚ files are used.
+#' @param exact lgl, TRUE if path is a path to .xlsx file.
 #'
-#'
-#'
+#' @return tibble
 #'
 #' @import
 #'
@@ -79,7 +100,7 @@ importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, noHours 
 
 }
 
-
-importGiosFromCSV <- function() {
-
-}
+# 
+# importGiosFromCSV <- function() {
+# 
+# }
