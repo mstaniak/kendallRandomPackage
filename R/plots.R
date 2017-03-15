@@ -11,6 +11,7 @@ plotLargeQQ <- function(srcTbl, quantiles = seq(0.8, 0.99, 0.05), alpha, minMaxQ
   qSeq <- seq(minMaxQ[1], minMaxQ[2], stepQ)
   x <- srcTbl %>%
     mutate(wartosc = as.vector(scale(wartosc))) %>%
+    filter(is.finite(wartosc)) %>%
     select(wartosc) %>%
     unlist(use.names = FALSE) %>%
     quantile(probs = qSeq)
