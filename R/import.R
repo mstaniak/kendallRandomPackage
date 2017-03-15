@@ -12,7 +12,6 @@
 #' @return tibble
 #'
 
-
 importOneXLSX <- function(station, polutant, year, noHours, 
 			  path = getwd(), skip = 3, exact = FALSE) {
   
@@ -79,7 +78,6 @@ importOneXLSX <- function(station, polutant, year, noHours,
 #' @import
 #'
 
-
 importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, noHours = 1, 
 			       path = getwd(), skip = 3, exact = FALSE) {
   if(!exact & (is.null(polutants) | is.null(years))) stop("Years and polutants must be given if exact = FALSE")
@@ -100,7 +98,3 @@ importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, noHours 
 
 }
 
-# 
-# importGiosFromCSV <- function() {
-# 
-# }
