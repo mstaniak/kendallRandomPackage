@@ -54,7 +54,7 @@ qkend<- function(mAlpha) {
   function(p, alpha) {
     oCDF <- function(x) pkend(mAlpha)(x, alpha)
     sapply(p, function(q) {
-      if(!is.finite(p)) return(NA)
+      if(!is.finite(q)) return(NA)
       else uniroot({function(x) oCDF(x) - q}, lower = 0, upper = 10^80)$root
     })
   }
