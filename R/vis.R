@@ -39,8 +39,8 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ) {
     select(maximum) %>%
     unlist(use.names = FALSE) %>%
     quantile(probs = qSeq)
-  qGran <- qgraniczny(function(x) x)
-  y <- qGran(qSeq, alpha)
+  qLim <- qkend(function(x) x)
+  y <- qLim(qSeq, alpha)
   tibble(x = x, y = y) %>%
     filter(is.finite(x),
            is.finite(y),
