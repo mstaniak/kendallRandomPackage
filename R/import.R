@@ -50,7 +50,7 @@ importOneXLSX <- function(station, polutant, year, noHours,
   tmpFrame <- as_tibble(read_excel(srcFile, skip = skip, col_names = FALSE))
   colnames(tmpFrame) <- colNames
   colnames(tmpFrame)[1] <- "measDate"
-  tmpFrame <- ramka[, c("measDate", stacja)]
+  tmpFrame <- tmpFrame[, c("measDate", station)]
   colnames(tmpFrame)[2] <- "measurement"
 
   tmpFrame %>%
@@ -91,7 +91,7 @@ importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, noHours 
   }
   tmpResult %>%
     bind_rows() %>%
-    select(station, polutants, measDate, measurement) %>%
+    select(station, polutant, measDate, measurement) %>%
     mutate(measDate = ymd_hms(measDate)) %>%
     mutate(measDate = round_date(measDate, unit = "hour")) %>%
     filter(year(measDate) %in% years)
