@@ -9,7 +9,7 @@
 #'
 
 calculateMaxima <- function(sourceFrame, block = "day") {
-  years <- unique(sourceFrame$year)
+  years <- unique(year(sourceFrame$measDate))
   sourceFrame %>%
     mutate(measTime = round_date(measDate, block),
 	   year = as.character(year(measDate))) %>%
