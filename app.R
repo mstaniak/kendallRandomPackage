@@ -1,3 +1,12 @@
+#' Shiny app for exploring air pollution data
+#'
+#' @param sourceFrame tibble returned by calculateMaxima function.
+#'
+#' @return shiny app object
+#'
+#' @export 
+#'
+
 kendallRandomApp <- function(sourceFrame) {
   require(shiny)
   allYears <- unique(sourceFrame$year)
