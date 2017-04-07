@@ -11,6 +11,8 @@
 #'
 #' @return tibble
 #'
+#' @export
+#'
 
 importOneXLSX <- function(station, polutant, year, noHours, 
 			  path = getwd(), skip = 3, exact = FALSE) {
