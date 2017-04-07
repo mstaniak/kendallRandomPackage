@@ -36,6 +36,7 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ) {
   x <- srcTbl %>%
     mutate(maximum = as.vector(scale(maximum))) %>%
     filter(is.finite(maximum)) %>%
+    ungroup() %>%
     select(maximum) %>%
     unlist(use.names = FALSE) %>%
     quantile(probs = qSeq)
@@ -66,11 +67,12 @@ plotQQ <- function(srcTbl, alpha, threshold = 0) {
            maximum > threshold) %>%
     mutate(maximum = maximum - threshold) %>%
     mutate(maximum = as.vector(scale(maximum))) %>%
+    ungroup() %>%
     select(maximum) %>%
     unlist(use.names = FALSE) %>%
     quantile(probs = seq(0.1, 0.9, 0.1)) # Do poprawy
-  qGran <- qgraniczny(function(x) x)
-  y <- qGran(seq(0.1, 0.9, 0.1), alpha)
+  qLim <- qkend(function(x) x)
+  y <- qLim(seq(0.1, 0.9, 0.1), alpha)
   tibble(x = x, y = y) %>%
     ggplot(aes(x, y)) +
     geom_point() +
