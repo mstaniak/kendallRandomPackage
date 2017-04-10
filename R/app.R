@@ -84,11 +84,14 @@ kendallRandomApp <- function(sourceFrame) {
 			plotOutput("largeQuantiles")
 		 ))),
       tabPanel("Distribution fitting",
+	       value = "fitting",
 	       fluidRow(column(2, id = "fitInputs",
 			selectInput("chosenPolutantF", label = "Polutant",
 				    choices = allPolutants, select = allPolutants[1]),
+			selectInput("chosenYearF", label = "Year",
+				    choices = allYears, selected = max(allYears)),
 			selectInput("chosenPlotF", label = "Plot",
-				    choices = c("QQ-plot", "CDF vs ECDF"))
+				    choices = c("QQ-plot" = "qqplot", "CDF vs ECDF" = "cdfs"))
 
 		 ),
 		 column(10, id = "fitOutput",
@@ -112,16 +115,28 @@ kendallRandomApp <- function(sourceFrame) {
 	if(input$wholePage == "largeqq") chosenPolutant <- input$chosenPolutantT
 	else if(input$wholePage == "pot") chosenPolutant <- input$chosenPolutant
 	else if(input$wholePage == "overview") chosenPolutant <- input$chosenPolutantO
+	else if(input$wholePage == "fitting") chosenPolutant <- input$chosenPolutantT
 	else chosenPolutant <- allPolutants[1]
 	if(input$wholePage == "largeqq") chosenYear <- input$chosenYearT
 	else if(input$wholePage == "pot") chosenYear <- input$chosenYear
 	else if(input$wholePage == "overview") chosenYear <- input$chosenYearO
+	else if(input$wholePage == "fitting") chosenYear <- input$chosenYearF
 	else chosenYear <- allYears[1]
 
 	sourceFrame %>%
 	  filter(polutant == chosenPolutant,
 		 year == chosenYear)
       })
+
+	     fitGEV <- reactive({
+	       if(input$wholePage == "fitting") {
+		 fit <- filteredData() %>%
+		   filter(is.finite(maximum)) %>%
+		   select(maximum) %>%
+		   unlist(use.names = FALSE) %>%
+		   egevd()
+	       }
+	     })
 
       kendallRandomWalk <- reactive({
 	simulation(input$trajectoriesNumber, input$trajectoriesLength,
@@ -154,6 +169,10 @@ kendallRandomApp <- function(sourceFrame) {
       })
       output$kendallPlot <- renderPlot({
 	convergenceVis(normingSequences(kendallRandomWalk()))
+      })
+      output$fitted <- renderPlot({
+	if(input$chosenPlotF == "qqplot") qqPlotGev(filteredData(), fitGEV())
+	else cdfsGev(filteredData(), fitGEV()) 
       })
     }
     )
