@@ -87,7 +87,7 @@ kendallRandomApp <- function(sourceFrame) {
 	       value = "fitting",
 	       fluidRow(column(2, id = "fitInputs",
 			selectInput("chosenPolutantF", label = "Polutant",
-				    choices = allPolutants, select = allPolutants[1]),
+				    choices = allPolutants, selected = allPolutants[1]),
 			selectInput("chosenYearF", label = "Year",
 				    choices = allYears, selected = max(allYears)),
 			selectInput("chosenPlotF", label = "Plot",
@@ -115,7 +115,7 @@ kendallRandomApp <- function(sourceFrame) {
 	if(input$wholePage == "largeqq") chosenPolutant <- input$chosenPolutantT
 	else if(input$wholePage == "pot") chosenPolutant <- input$chosenPolutant
 	else if(input$wholePage == "overview") chosenPolutant <- input$chosenPolutantO
-	else if(input$wholePage == "fitting") chosenPolutant <- input$chosenPolutantT
+	else if(input$wholePage == "fitting") chosenPolutant <- input$chosenPolutantF
 	else chosenPolutant <- allPolutants[1]
 	if(input$wholePage == "largeqq") chosenYear <- input$chosenYearT
 	else if(input$wholePage == "pot") chosenYear <- input$chosenYear
@@ -130,8 +130,9 @@ kendallRandomApp <- function(sourceFrame) {
 
 	     fitGEV <- reactive({
 	       if(input$wholePage == "fitting") {
-		 fit <- filteredData() %>%
+		   filteredData() %>%
 		   filter(is.finite(maximum)) %>%
+		   ungroup() %>%
 		   select(maximum) %>%
 		   unlist(use.names = FALSE) %>%
 		   egevd()
