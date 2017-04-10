@@ -84,10 +84,15 @@ kendallRandomApp <- function(sourceFrame) {
 			plotOutput("largeQuantiles")
 		 ))),
       tabPanel("Distribution fitting",
-	fluidRow(column(2, id = "fitInputs"
+	       fluidRow(column(2, id = "fitInputs",
+			selectInput("chosenPolutantF", label = "Polutant",
+				    choices = allPolutants, select = allPolutants[1]),
+			selectInput("chosenPlotF", label = "Plot",
+				    choices = c("QQ-plot", "CDF vs ECDF"))
+
 		 ),
-		 column(10, id = "fitOutput"
-		 # Histogramy, dystrybuanty empiryczne i teoretyczne, wykresy qq.
+		 column(10, id = "fitOutput",
+			plotOutput("fitted")
 		 ))), 
       tabPanel("Kendall random walk",
 	fluidRow(column(2, id = "kendallInputs",
