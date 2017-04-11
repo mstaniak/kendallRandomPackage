@@ -41,6 +41,7 @@ simulateOneTrajectory <- function(trajectoryLength, stepDist,
 #' @param trajectoryLength length of trajectories
 #' @param stepDist function returning random numbers from step dist.
 #' @param parAlpha alpha parameter
+#' 
  
 simulation <- function(simulationNumber, trajectoryLength,
                        stepDist, parAlpha, ...) {
@@ -62,8 +63,6 @@ simulation <- function(simulationNumber, trajectoryLength,
 #' 
 #' @return tibble
 #' 
-#' @export
-#' 
 
 normingSequences <- function(simulations, AnSeq = 1, BnSeq = 0) {
   simulations %>%
@@ -78,8 +77,6 @@ normingSequences <- function(simulations, AnSeq = 1, BnSeq = 0) {
 #' @param ogrX maximum value on x axis
 #' 
 #' @return ggplot2 object
-#' 
-#' @export
 #' 
 
 convergenceVis <- function(simulations, ogrX = NULL) {

@@ -13,6 +13,9 @@ plotQQ(srcTbl, alpha, threshold = 0)
 
 \item{threshold}{cut-off value for observations}
 }
+\value{
+ggplot2 object
+}
 \description{
 Standard QQ-plot
 }

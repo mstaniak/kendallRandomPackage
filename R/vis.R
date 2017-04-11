@@ -5,8 +5,6 @@
 #'
 #' @return ggplot2 object
 #'  
-#' @export
-#'
 
 plotHist <- function(srcTbl, threshold) {
   src <- srcTbl %>%
@@ -27,8 +25,6 @@ plotHist <- function(srcTbl, threshold) {
 #' @param stepQ step between minimum and maximum quantile
 #' 
 #' @return ggplot2 object
-#' 
-#' @export
 #' 
 
 plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ) {
@@ -60,6 +56,9 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ) {
 #' @param srcTbl tibble returned by filteredData()
 #' @param alpha Kendall stable dist. parameter
 #' @param threshold cut-off value for observations
+#' 
+#' @return ggplot2 object
+#' 
 
 plotQQ <- function(srcTbl, alpha, threshold = 0) {
   x <- srcTbl %>%
@@ -87,8 +86,6 @@ plotQQ <- function(srcTbl, alpha, threshold = 0) {
 #' 
 #' @return ggplot2 object
 #' 
-#' @export
-#' 
 
 plotTime <- function(srcTbl, datesRange = "") {
   srcTbl %>%
@@ -106,8 +103,6 @@ plotTime <- function(srcTbl, datesRange = "") {
 #' @param srcTbl tibble returned by filteredData()
 #' 
 #' @return ggplot2 object
-#' 
-#' @export
 #' 
 
 plotEcdf <- function(srcTbl) {

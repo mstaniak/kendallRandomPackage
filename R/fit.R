@@ -5,8 +5,6 @@
 #'
 #' @return ggplot2 object
 #'
-#' @export
-#'
 
 qqPlotGev <- function(sourceFrame, fittedGEV) {
   sourceFrame %>%
@@ -29,8 +27,6 @@ qqPlotGev <- function(sourceFrame, fittedGEV) {
 #' @param fittedGEV list returned by egevd function
 #'
 #' @return ggplot2 object
-#'
-#' @export
 #'
 
 cdfsGev <- function(sourceFrame, fittedGEV) {

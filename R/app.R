@@ -26,8 +26,8 @@ kendallRandomApp <- function(sourceFrame) {
     ui =  fluidPage(
     navbarPage("Modelling air pollution levels in Poland",
 	       id = "wholePage",
-      tabPanel("About",
-	fluidRow(column(12, id = "aboutApp"))),
+#       tabPanel("About",
+# 	fluidRow(column(12, id = "aboutApp"))),
 	       # wyświetlić nazwę stacji.
       tabPanel("Overview",
 	       value = "overview",
