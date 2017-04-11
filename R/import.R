@@ -3,8 +3,8 @@
 #' @param station chr, name of the chosen station.
 #' @param polutant chr, name of chosen polutant.
 #' @param year chr, chosen year (yyyy).
-#' @param noHours chr, 1 or 24, defaults to 1 (hourly meas.)
 #' @param path chr, path to folder containing .xlsx file or path to .xlsx file.
+#' @param noHours chr, 1 or 24, defaults to 1 (hourly meas.)
 #' @param skip int, number of rows to skip, defaults to 3.
 #'        Do not change if unchanged GIOŚ files are used.
 #' @param exact lgl, TRUE if path is a path to .xlsx file.
@@ -12,8 +12,8 @@
 #' @return tibble
 #'
 
-importOneXLSX <- function(station, polutant, year, noHours, 
-			  path = getwd(), skip = 3, exact = FALSE) {
+importOneXLSX <- function(station, polutant, year, path = getwd(),
+                          noHours = "1", skip = 3, exact = FALSE) {
   
   fileList <- character(0)
   if(exact) fileList <- path
@@ -67,8 +67,8 @@ importOneXLSX <- function(station, polutant, year, noHours,
 #' @param station chr, name of the chosen station.
 #' @param polutants chr, names of chosen polutants.
 #' @param years chr, chosen years (yyyy).
-#' @param noHours chr, 1 or 24, defaults to 1 (hourly meas.)
 #' @param path chr, path to folder containing .xlsx file or path to .xlsx file.
+#' @param noHours chr, 1 or 24, defaults to 1 (hourly meas.)
 #' @param skip int, number of rows to skip, defaults to 3.
 #'        Do not change if unchanged GIOŚ files are used.
 #' @param exact lgl, TRUE if path is a path to .xlsx file.
@@ -78,8 +78,8 @@ importOneXLSX <- function(station, polutant, year, noHours,
 #' @export
 #'
 
-importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, noHours = 1, 
-			       path = getwd(), skip = 3, exact = FALSE) {
+importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, path = getwd(), 
+                               noHours = "1", skip = 3, exact = FALSE) {
   if(!exact & (is.null(polutants) | is.null(years))) stop("Years and polutants must be given if exact = FALSE")
   if(exact & path == getwd()) stop("Paths to files must be given if exact = TRUE")
 
