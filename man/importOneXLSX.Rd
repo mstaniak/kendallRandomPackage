@@ -4,8 +4,8 @@
 \alias{importOneXLSX}
 \title{Import one file from GIOŚ .xlsx file.}
 \usage{
-importOneXLSX(station, polutant, year, noHours, path = getwd(), skip = 3,
-  exact = FALSE)
+importOneXLSX(station, polutant, year, path = getwd(), noHours = "1",
+  skip = 3, exact = FALSE)
 }
 \arguments{
 \item{station}{chr, name of the chosen station.}
@@ -14,9 +14,9 @@ importOneXLSX(station, polutant, year, noHours, path = getwd(), skip = 3,
 
 \item{year}{chr, chosen year (yyyy).}
 
-\item{noHours}{chr, 1 or 24, defaults to 1 (hourly meas.)}
-
 \item{path}{chr, path to folder containing .xlsx file or path to .xlsx file.}
+
+\item{noHours}{chr, 1 or 24, defaults to 1 (hourly meas.)}
 
 \item{skip}{int, number of rows to skip, defaults to 3.
 Do not change if unchanged GIOŚ files are used.}

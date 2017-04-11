@@ -76,6 +76,12 @@ importOneXLSX <- function(station, polutant, year, path = getwd(),
 #' @return tibble
 #'
 #' @export
+#' 
+#' @examples
+#' importGiosFromXLSX("DsWrocKorzA", c("NOx", "SO2"), c("2015", "2014"))
+#' # Default settings, .xlsx files are in the working directory.
+#' importGiosFromXLSX("DsWrocKorzA", c("NOx", "SO2"), c("2015", "2014"), "path-to-the-folder")
+#' # Importing from a different (not working) directory.
 #'
 
 importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, path = getwd(), 

@@ -5,6 +5,11 @@
 #' @return shiny app object
 #'
 #' @export 
+#' 
+#' @examples
+#' obs <- importGiosFromXLSX("DsWrocKorzA", c("NOx", "SO2"), c("2015", "2014"))
+#' obs2 <- calculateMaxima(obs)
+#' kendallRandomApp(obs2)
 #'
 
 kendallRandomApp <- function(sourceFrame) {

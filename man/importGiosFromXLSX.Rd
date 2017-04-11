@@ -4,8 +4,8 @@
 \alias{importGiosFromXLSX}
 \title{Import data for one station, multiple years and polutants.}
 \usage{
-importGiosFromXLSX(station, polutants = NULL, years = NULL, noHours = 1,
-  path = getwd(), skip = 3, exact = FALSE)
+importGiosFromXLSX(station, polutants = NULL, years = NULL,
+  path = getwd(), noHours = "1", skip = 3, exact = FALSE)
 }
 \arguments{
 \item{station}{chr, name of the chosen station.}
@@ -14,9 +14,9 @@ importGiosFromXLSX(station, polutants = NULL, years = NULL, noHours = 1,
 
 \item{years}{chr, chosen years (yyyy).}
 
-\item{noHours}{chr, 1 or 24, defaults to 1 (hourly meas.)}
-
 \item{path}{chr, path to folder containing .xlsx file or path to .xlsx file.}
+
+\item{noHours}{chr, 1 or 24, defaults to 1 (hourly meas.)}
 
 \item{skip}{int, number of rows to skip, defaults to 3.
 Do not change if unchanged GIOŚ files are used.}
@@ -28,5 +28,12 @@ tibble
 }
 \description{
 Import data for one station, multiple years and polutants.
+}
+\examples{
+importGiosFromXLSX("DsWrocKorzA", c("NOx", "SO2"), c("2015", "2014"))
+# Default settings, .xlsx files are in the working directory.
+importGiosFromXLSX("DsWrocKorzA", c("NOx", "SO2"), c("2015", "2014"), "path-to-the-folder")
+# Importing from a different (not working) directory.
+
 }
 
