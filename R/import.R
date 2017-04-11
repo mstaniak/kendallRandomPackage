@@ -54,10 +54,10 @@ importOneXLSX <- function(station, polutant, year, path = getwd(),
   colnames(tmpFrame)[2] <- "measurement"
 
   tmpFrame %>%
-    mutate(measurement = str_replace_all(measurement, ",", ".")) %>%
-    mutate(measurement = as.numeric(measurement),
-	   station = station,
-	   polutant = polutant)
+    dplyr::mutate(measurement = str_replace_all(measurement, ",", ".")) %>%
+    dplyr::mutate(measurement = as.numeric(measurement),
+	                station = station,
+	                polutant = polutant)
 
 }
 
@@ -97,10 +97,10 @@ importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, path = g
   }
   tmpResult %>%
     bind_rows() %>%
-    select(station, polutant, measDate, measurement) %>%
-    mutate(measDate = ymd_hms(measDate)) %>%
-    mutate(measDate = round_date(measDate, unit = "hour")) %>%
-    filter(year(measDate) %in% years)
+    dplyr::select(station, polutant, measDate, measurement) %>%
+    dplyr::mutate(measDate = ymd_hms(measDate)) %>%
+    dplyr::mutate(measDate = round_date(measDate, unit = "hour")) %>%
+    dplyr::filter(year(measDate) %in% years)
 
 }
 

@@ -51,7 +51,7 @@ simulation <- function(simulationNumber, trajectoryLength,
                           parAlpha, ...))
   lapply(listTmp, 
          function(x) tibble(simNo = x, sim = tmp[[x]])) %>%
-    bind_rows() 
+    dplyr::bind_rows() 
 } 
 
 
@@ -66,9 +66,9 @@ simulation <- function(simulationNumber, trajectoryLength,
 
 normingSequences <- function(simulations, AnSeq = 1, BnSeq = 0) {
   simulations %>%
-    mutate(simNo = as.factor(as.character(simNo))) %>%
-    group_by(simNo) %>%
-    mutate(sim = AnSeq*sim - BnSeq)
+    dplyr::mutate(simNo = as.factor(as.character(simNo))) %>%
+    dplyr::group_by(simNo) %>%
+    dplyr::mutate(sim = AnSeq*sim - BnSeq)
 }
 
 #' Draw simulated trajectories
@@ -83,14 +83,15 @@ convergenceVis <- function(simulations, ogrX = NULL) {
   nSim <- max(unique(as.integer(as.character(simulations$simNo))))
   trajectoryLength <- dim(simulations)[1]/nSim
   if(is.null(ogrX)) ogrX <- trajectoryLength
-  simulations %>%
-    ungroup() %>%
-    mutate(x = rep(1:trajectoryLength, nSim)) %>%
-    filter(x <= ogrX) %>% 
+ 
+   simulations %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(x = rep(1:trajectoryLength, nSim)) %>%
+    dplyr::filter(x <= ogrX) %>% 
     ggplot(aes(x = x, y = sim, group = simNo)) +
-    geom_line() +
-    theme_bw() +
-    xlab("") +
-    ylab("") +
-    guides(color = "none")
+      geom_line() +
+      theme_bw() +
+      xlab("") +
+      ylab("") +
+      guides(color = "none")
 }

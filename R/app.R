@@ -20,10 +20,10 @@ kendallRandomApp <- function(sourceFrame) {
   names(allPolutants) <- unique(sourceFrame$polutant)
 
   maxThreshold <- sourceFrame %>%
-    filter(polutant == allPolutants[1],
+    dplyr::filter(polutant == allPolutants[1],
 	         year == allYears[1]) %>%
-    ungroup() %>%
-    select(maximum) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(maximum) %>%
     unlist(use.names = FALSE) %>%
     max(na.rm = T)
   
@@ -129,16 +129,16 @@ kendallRandomApp <- function(sourceFrame) {
 	else chosenYear <- allYears[1]
 
 	sourceFrame %>%
-	  filter(polutant == chosenPolutant,
+	  dplyr::filter(polutant == chosenPolutant,
 		 year == chosenYear)
       })
 
 	     fitGEV <- reactive({
 	       if(input$wholePage == "fitting") {
 		   filteredData() %>%
-		   filter(is.finite(maximum)) %>%
-		   ungroup() %>%
-		   select(maximum) %>%
+	     dplyr::filter(is.finite(maximum)) %>%
+	     dplyr::ungroup() %>%
+	     dplyr::select(maximum) %>%
 		   unlist(use.names = FALSE) %>%
 		   egevd()
 	       }
@@ -161,8 +161,8 @@ kendallRandomApp <- function(sourceFrame) {
 	if(input$plotTypePOT == "hist") plotHist(filteredData(), input$threshold)
 	else if(input$plotTypePOT == "qqplot") plotQQ(filteredData(), input$alphaPOT, input$threshold)
 	else filteredData() %>%
-	  filter(maximum > input$threshold) %>%
-	  mutate(maximum = maximum - input$threshold) %>%
+    dplyr::filter(maximum > input$threshold) %>%
+    dplyr::mutate(maximum = maximum - input$threshold) %>%
 	  plotEcdf()
       })
       output$largeQuantiles <- renderPlot({
