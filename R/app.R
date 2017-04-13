@@ -100,7 +100,8 @@ kendallRandomApp <- function(sourceFrame) {
 
 		 ),
 		 column(10, id = "fitOutput",
-			plotOutput("fitted")
+			plotOutput("fitted"),
+			tableOutput("fittedParameters")
 		 ))), 
       tabPanel("Kendall random walk",
 	fluidRow(column(2, id = "kendallInputs",
@@ -180,6 +181,9 @@ kendallRandomApp <- function(sourceFrame) {
 	if(input$chosenPlotF == "qqplot") qqPlotGev(filteredData(), fitGEV())
 	else cdfsGev(filteredData(), fitGEV()) 
       })
+      output$fittedParameters <- renderDataTable(tibble(location = fitGEV()$parameters[1],
+                                                        scale = fitGEV()$parameters[2],
+                                                        shape = fitGEV()$parameters[3]))
     }
     )
 }
