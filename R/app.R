@@ -100,8 +100,8 @@ kendallRandomApp <- function(sourceFrame) {
 
 		 ),
 		 column(10, id = "fitOutput",
-			plotOutput("fitted"),
-			tableOutput("fittedParameters")
+			 plotOutput("fitted"),		   
+			 tableOutput("fittedParameters")
 		 ))), 
       tabPanel("Kendall random walk",
 	fluidRow(column(2, id = "kendallInputs",
@@ -134,16 +134,14 @@ kendallRandomApp <- function(sourceFrame) {
 		 year == chosenYear)
       })
 
-	     fitGEV <- reactive({
-	       if(input$wholePage == "fitting") {
+	fitGEV <- reactive({
 		   filteredData() %>%
 	     dplyr::filter(is.finite(maximum)) %>%
 	     dplyr::ungroup() %>%
 	     dplyr::select(maximum) %>%
 		   unlist(use.names = FALSE) %>%
 		   egevd()
-	       }
-	     })
+	})
 
       kendallRandomWalk <- reactive({
 	simulation(input$trajectoriesNumber, input$trajectoriesLength,
@@ -181,7 +179,7 @@ kendallRandomApp <- function(sourceFrame) {
 	if(input$chosenPlotF == "qqplot") qqPlotGev(filteredData(), fitGEV())
 	else cdfsGev(filteredData(), fitGEV()) 
       })
-      output$fittedParameters <- renderDataTable(tibble(location = fitGEV()$parameters[1],
+      output$fittedParameters <- renderTable(tibble(location = fitGEV()$parameters[1],
                                                         scale = fitGEV()$parameters[2],
                                                         shape = fitGEV()$parameters[3]))
     }
