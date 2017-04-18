@@ -92,7 +92,7 @@ importGiosFromXLSX <- function(station, polutants = NULL, years = NULL, path = g
   tmpResult <- vector("list", length(polutants)*length(years))
   for(i in polutants) {
     for(j in years) {
-      tmpResult[[paste0(i, j)]] <- importOneXLSX(station, i, j, noHours, path, skip, exact)
+      tmpResult[[paste0(i, j)]] <- importOneXLSX(station, i, j, path, noHours, skip, exact)
     }
   }
   tmpResult %>%
