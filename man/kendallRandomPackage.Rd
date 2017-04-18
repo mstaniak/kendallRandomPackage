@@ -13,6 +13,7 @@ and visualize them using attached shiny app.
 \section{Important function}{
 
 \code{\link{importGiosFromXLSX}} imports data from multiple .xlsx files.
+\code{\link}{importGiosFromCSV} does the same for .csv files converted from .xlsx files, which is faster.
 \code{\link{calculateMaxima}} calculates maxima over given period for data important using \code{\link{importGiosFromXLSX}}.
 \code{\link{kendallRandomApp}} starts a Shiny application that features multiple tools for exploring obtained data, 
 including peak over threshold methods.
