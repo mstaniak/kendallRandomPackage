@@ -2,6 +2,7 @@
 
 export(calculateMaxima)
 export(dkend)
+export(importGiosFromCSV)
 export(importGiosFromXLSX)
 export(kendallRandomApp)
 export(pkend)
