@@ -9,55 +9,55 @@ vignette: >
 ---
 
 
-## O danych
+### kendallRandomPackage
 
-Archiwalne dane pomiarowe do roku 2015 znajdują się na stronie [GIOŚ](http://www.powietrze.gios.gov.pl/pjp/archives).
-W plikach .zip znajdują się arkusze kalkulacyjne z danymi dla poszczególnych związków chemicznych.
-Skrót 1g oznacza dane godzine, 24g - dobowe.
-Należy uważać z jednostkami: niektóre wyniki pomiarów są wyrażone w miligramach na metr sześcienny,
-a inne w mikrogramach na metr sześcienny.
-Wszystkie dane z 2016 roku są w tej drugiej jednostce.
+The goal of this package is to make analyses of air pollution data taken from GIOŚ website simple and manageable.
+Measurement data are scattered across many spreadsheet files, which makes them not suitable for automated analyses by polutant and year in R.
+This package provides basic tools for converting those datasets in R-friendly format along with a Shiny App for visualizations and GEV distribution fitting.
 
-Interesująca nas stacja nazywała się Wrocław Korzeniowskiego.
-Teraz nazywa się Wrocław Wybrzeże Conrada.
-Funkcje pobierające dane przyjmują dowolną z tych nazw i w razie potrzeby zmieniają ją na występującą w odpowiednim pliku.
 
-#### Uwaga
+### About the data
 
-1. Nie w każdym pliku znajdują się dane dla tej stacji.
-2. W niektórych latach (np. 2013) występuje wiele obserwacji brakujących. 
-   Kiedy znajdują się na początku kolumny, funkcje pobierające dane z plików .xls mogą uznać taką kolumnę za pustą.
-   W takiej sytuacji należy przekonwertować plik do formatu csv i użyć funkcji _pobierzCSV_.
-   Kody stacji są dostępne w pakiecie w wektorze kodyStacji.
+Data up until 2015 ca be found on [GIOŚ](http://www.powietrze.gios.gov.pl/pjp/archives) website.
+Data from 2016 will be posted soon.
+ZIP files contains spreadsheets with data on a polutant given in the file name.
+_1g_ in the filename means marks hourly data, _24g_ - daily measurements.
+Different units are used for different polutants and they are not given in the spreadsheet. 
+They can be checked on other GIOŚ pages.
+Alternatively, one can used standardized data.
 
-## O pakiecie
+Some stations' names were changed. 
+All the names can be found in _stationCodes_ vector that is a part of the package.
+Old and new names can be used interchangeably while calling functions _importGiosFromXLSX_ and _importGiosFromCSV_.
 
-Pakiety, które należy załadować, aby móc korzystać z pakietu to dplyr, tibble, readxl, lubridate i tidyr do pobierania danych oraz ggplot2 i EnvStats do pozostałych funkcji.
-W pakiecie EnvStats znajduje się funkcja _rpareto_ potrzebna do symulowania symetrycznego rozkładu Pareto.
 
-## Pobieranie danych.
+#### Some remarks
 
-Funkcja pobierzXLSX służy do pobierania danych dla jednej stacji z _surowego_ pliku ze strony GIOŚ.
-Informacje można uzyskać w pomocy do funkcji: _?pobierzXLSX_.
-Jej ogólna składnia wygląda następująco.
+1. Not all files contain data for all stations. If a station is not found in a given file, an empty _tibble_ (a data frame) is returned. 
+2. Spreadsheet format is problematic for many reasons.
+   Two main problems are memory usage and missing observations.
+   Importing csv files is at least 6 times faster.
+   Also, when there's a lot of missing observations for a given stations, R can't guess the type of a column correctly, which causes errors.
+   Thus, converting the files to csv format is advised. 
+   For example, this can be done automaticaly under Linux using LibreOffice _headless_ utility.
+  
+ 
+## Required packages.
 
-> pobierzXLSX(stacja, substancje, lata, liczbaGodzin = 1, sciezka = getwd(),
-       pominiecie = 3)
+_dplyr_, _tibble_, _lubridate_, _stringr_ and _tidyr_ packages are required to use this package. 
+If data are imported using _importGiosFromXLSX_, _readxl_ package must also be loaded.
+If _importGiosFromCSV_ is used, _readr_ package is required.
 
-Przykładowe wykorzystanie znajduje się poniżej.
+_shiny_, _ggplot2_ and _EnvStats_ packages are needed to use _kendallRandomApp_ function that starts a Shiny App.
 
-> pobierzXLSX("DsWrocKorzA", c("CO2", "NO2"), c("2014", "2015"))
 
-Funkcja szuka plików o standardowych nazwach ze strony GIOŚ w folderze zadanym przez argument _sciezka_.
-Wynikiem takiego wywołania będzie ramka (dokładniej _tibble_) ze stężeniami CO2 i NO2  w latach 2014 i 2015. 
-Ramka będzie miała kolumny _stacja_ z nazwą stacji (dzięki czemu dane dla kilku stacji można łatwo pobrać, sklejając wyniki działania pobierzXLSX), _dataPomiaru_ z datą pomiaru w formacie yyyy-mm-dd hh::mm:ss, _substancja_ z nazwą związku i _pomiar_ z wynikiem pomiaru (w miligramach na metr sześcienny).
-Funkcja pomija domyślnie pierwsze trzy wiersze w pliku .xls, bo znajdują się tam nazwy kolumn i inne informacje.
+### Importing data
 
-Funkcja pobierzCSV ma bardzo podobną składnię.
+Examples for _importGiosFromXLSX_ and _importGiosFromCSV_ function can be found in package documentation using the _?_ syntax.
 
-> pobierzCSV(stacja, substancje, lata, liczbaGodzin = 1, sciezka = getwd())
+Both of these functions search for raw files downloaded from GIOŚ website or csv versions of these files under their default names or names provided as arguments to these function.
+Details can be found in package documentation.
+For almost all purposes, only arguments _station_, _polutants_, _years_ and _path_ must be provided.
 
-Zwraca taką samą ramkę.
-
-Odpowiednie statystyki dobowe (minimum, maksimum i średnią) można łatwo obliczyć, stosując funkcję obliczStatystykiDobowe.
+Maxima over given period can be calculated using _calculateMaxima_ functions. Again, the details can be found with the help of _?_ syntax.
 
