@@ -1,0 +1,63 @@
+---
+title: "Importing data from GIOŚ website"
+author: "Mateusz Staniak"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Importing data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+## O danych
+
+Archiwalne dane pomiarowe do roku 2015 znajdują się na stronie [GIOŚ](http://www.powietrze.gios.gov.pl/pjp/archives).
+W plikach .zip znajdują się arkusze kalkulacyjne z danymi dla poszczególnych związków chemicznych.
+Skrót 1g oznacza dane godzine, 24g - dobowe.
+Należy uważać z jednostkami: niektóre wyniki pomiarów są wyrażone w miligramach na metr sześcienny,
+a inne w mikrogramach na metr sześcienny.
+Wszystkie dane z 2016 roku są w tej drugiej jednostce.
+
+Interesująca nas stacja nazywała się Wrocław Korzeniowskiego.
+Teraz nazywa się Wrocław Wybrzeże Conrada.
+Funkcje pobierające dane przyjmują dowolną z tych nazw i w razie potrzeby zmieniają ją na występującą w odpowiednim pliku.
+
+#### Uwaga
+
+1. Nie w każdym pliku znajdują się dane dla tej stacji.
+2. W niektórych latach (np. 2013) występuje wiele obserwacji brakujących. 
+   Kiedy znajdują się na początku kolumny, funkcje pobierające dane z plików .xls mogą uznać taką kolumnę za pustą.
+   W takiej sytuacji należy przekonwertować plik do formatu csv i użyć funkcji _pobierzCSV_.
+   Kody stacji są dostępne w pakiecie w wektorze kodyStacji.
+
+## O pakiecie
+
+Pakiety, które należy załadować, aby móc korzystać z pakietu to dplyr, tibble, readxl, lubridate i tidyr do pobierania danych oraz ggplot2 i EnvStats do pozostałych funkcji.
+W pakiecie EnvStats znajduje się funkcja _rpareto_ potrzebna do symulowania symetrycznego rozkładu Pareto.
+
+## Pobieranie danych.
+
+Funkcja pobierzXLSX służy do pobierania danych dla jednej stacji z _surowego_ pliku ze strony GIOŚ.
+Informacje można uzyskać w pomocy do funkcji: _?pobierzXLSX_.
+Jej ogólna składnia wygląda następująco.
+
+> pobierzXLSX(stacja, substancje, lata, liczbaGodzin = 1, sciezka = getwd(),
+       pominiecie = 3)
+
+Przykładowe wykorzystanie znajduje się poniżej.
+
+> pobierzXLSX("DsWrocKorzA", c("CO2", "NO2"), c("2014", "2015"))
+
+Funkcja szuka plików o standardowych nazwach ze strony GIOŚ w folderze zadanym przez argument _sciezka_.
+Wynikiem takiego wywołania będzie ramka (dokładniej _tibble_) ze stężeniami CO2 i NO2  w latach 2014 i 2015. 
+Ramka będzie miała kolumny _stacja_ z nazwą stacji (dzięki czemu dane dla kilku stacji można łatwo pobrać, sklejając wyniki działania pobierzXLSX), _dataPomiaru_ z datą pomiaru w formacie yyyy-mm-dd hh::mm:ss, _substancja_ z nazwą związku i _pomiar_ z wynikiem pomiaru (w miligramach na metr sześcienny).
+Funkcja pomija domyślnie pierwsze trzy wiersze w pliku .xls, bo znajdują się tam nazwy kolumn i inne informacje.
+
+Funkcja pobierzCSV ma bardzo podobną składnię.
+
+> pobierzCSV(stacja, substancje, lata, liczbaGodzin = 1, sciezka = getwd())
+
+Zwraca taką samą ramkę.
+
+Odpowiednie statystyki dobowe (minimum, maksimum i średnią) można łatwo obliczyć, stosując funkcję obliczStatystykiDobowe.
+
