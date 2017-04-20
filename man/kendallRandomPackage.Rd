@@ -15,6 +15,8 @@ and visualize them using attached shiny app.
 \code{\link{importGiosFromXLSX}} imports data from multiple .xlsx files.
 \code{\link{importGiosFromCSV}} does the same for .csv files converted from .xlsx files, which is faster.
 \code{\link{calculateMaxima}} calculates maxima over given period for data important using \code{\link{importGiosFromXLSX}}.
+\code{\link{fitMultiGEV}} fits GEV distribution using egevd() function from EnvStats package. 
+Resulting table is suitable for further analysis or exploration (like plotting qq-plots, empirical and theoretical CDFs, etc).
 \code{\link{kendallRandomApp}} starts a Shiny application that features multiple tools for exploring obtained data, 
 including peak over threshold methods.
 }
