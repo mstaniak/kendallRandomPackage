@@ -8,8 +8,8 @@
 
 plotHist <- function(srcTbl, threshold) {
   src <- srcTbl %>%
-    filter(maximum > threshold) %>%
-    mutate(maximum = maximum - threshold)
+    dplyr::filter(maximum > threshold) %>%
+    dplyr::mutate(maximum = maximum - threshold)
   binW <- IQR(src$maximum)/(length(src$maximum)^(1/3))
   ggplot(src, aes(x = maximum)) +
     geom_histogram(binwidth = binW) +
@@ -30,24 +30,24 @@ plotHist <- function(srcTbl, threshold) {
 plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ) {
   qSeq <- seq(minMaxQ[1], minMaxQ[2], stepQ)
   x <- srcTbl %>%
-    mutate(maximum = as.vector(scale(maximum))) %>%
-    filter(is.finite(maximum)) %>%
-    ungroup() %>%
-    select(maximum) %>%
+    dplyr::mutate(maximum = as.vector(scale(maximum))) %>%
+    dplyr::filter(is.finite(maximum)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(maximum) %>%
     unlist(use.names = FALSE) %>%
     quantile(probs = qSeq)
   qLim <- qkend(function(x) x)
   y <- qLim(qSeq, alpha)
   tibble(x = x, y = y) %>%
-    filter(is.finite(x),
+    dplyr::filter(is.finite(x),
            is.finite(y),
            x < 10,
            y < 10) %>%
     ggplot(aes(x, y, label = round(y, 2))) +
-    geom_point() +
-    geom_smooth(method = "lm", se = FALSE) +
-    geom_text() +
-    theme_bw()
+      geom_point() +
+      geom_smooth(method = "lm", se = FALSE) +
+      geom_text() +
+      theme_bw()
 }
 
 
@@ -62,12 +62,12 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ) {
 
 plotQQ <- function(srcTbl, alpha, threshold = 0) {
   x <- srcTbl %>%
-    filter(is.finite(maximum),
+    dplyr::filter(is.finite(maximum),
            maximum > threshold) %>%
-    mutate(maximum = maximum - threshold) %>%
-    mutate(maximum = as.vector(scale(maximum))) %>%
-    ungroup() %>%
-    select(maximum) %>%
+    dplyr::mutate(maximum = maximum - threshold) %>%
+    dplyr::mutate(maximum = as.vector(scale(maximum))) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(maximum) %>%
     unlist(use.names = FALSE) %>%
     quantile(probs = seq(0.1, 0.9, 0.1)) # Do poprawy
   qLim <- qkend(function(x) x)

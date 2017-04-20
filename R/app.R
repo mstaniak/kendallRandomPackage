@@ -140,7 +140,7 @@ kendallRandomApp <- function(sourceFrame) {
 	     dplyr::ungroup() %>%
 	     dplyr::select(maximum) %>%
 		   unlist(use.names = FALSE) %>%
-		   egevd()
+		   EnvStats::egevd()
 	})
 
       kendallRandomWalk <- reactive({

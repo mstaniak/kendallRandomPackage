@@ -156,7 +156,6 @@ importOneCSV <- function(station, polutant, year, path = getwd(),
   colnames(tmpFrame)[2] <- "measurement"
   
   tmpFrame %>%
-    # dplyr::mutate(measurement = str_replace_all(measurement, ",", ".")) %>%
     dplyr::mutate(measurement = as.numeric(measurement),
                   station = station,
                   polutant = polutant)
@@ -190,7 +189,7 @@ importGiosFromCSV <- function(station, polutants = NULL, years = NULL, path = ge
     }
   }
   tmpResult %>%
-    bind_rows() %>%
+    dplyr::bind_rows() %>%
     dplyr::select(station, polutant, measDate, measurement) %>%
     dplyr::mutate(measDate = ymd_hms(measDate)) %>%
     dplyr::mutate(measDate = round_date(measDate, unit = "hour")) %>%
