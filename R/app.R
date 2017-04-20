@@ -131,7 +131,7 @@ kendallRandomApp <- function(sourceFrame) {
 
 	sourceFrame %>%
 	  dplyr::filter(polutant == chosenPolutant,
-		 year == chosenYear)
+		              year == chosenYear)
       })
 
 	fitGEV <- reactive({

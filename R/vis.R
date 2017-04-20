@@ -92,10 +92,10 @@ plotTime <- function(srcTbl, datesRange = "") {
     #     filter(dzienPomiaru >= datesRange[1],
     # 	   dzienPomiaru <= datesRange[2]) %>%
     ggplot(aes(x = measTime, y = maximum)) +
-    geom_line() +
-    theme_bw() +
-    xlab("date") +
-    ylab("measured value")
+      geom_line() +
+      theme_bw() +
+      xlab("date") +
+      ylab("measured value")
 }
 
 #' ECDF for data
