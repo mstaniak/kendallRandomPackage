@@ -5,7 +5,7 @@
 \title{Fit GEV distribution to multiple sets of observations}
 \usage{
 fitMultiGEV(srcFrame, groupingVariables = c("year", "polutant"),
-  full = TRUE)
+  full = TRUE, ...)
 }
 \arguments{
 \item{srcFrame}{tibble returned by calculateMaxima function}

@@ -14,7 +14,7 @@
 #' @export
 #'
 
-fitMultiGEV <- function(srcFrame, groupingVariables = c("year", "polutant"), full = TRUE) {
+fitMultiGEV <- function(srcFrame, groupingVariables = c("year", "polutant"), full = TRUE, ...) {
   tmp <- srcFrame %>%
     dplyr::filter(is.finite(maximum)) %>%
     dplyr::group_by_(.dots = groupingVariables) %>%
