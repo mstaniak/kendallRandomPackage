@@ -145,7 +145,7 @@ importOneCSV <- function(station, polutant, year, path = getwd(),
     if(isOld) {
       station <- stationCodes[station]
     } else if(isNew) {
-      station <- names(stationCodes)[grep(stationCodes, pattern = station)]
+      station <- names(stationCodes)[grepl(x = stationCodes, pattern = station)]
     }
     if(!sum(grepl(colNames, pattern = station))) {
       return(emptyFrame)
@@ -156,6 +156,7 @@ importOneCSV <- function(station, polutant, year, path = getwd(),
   colnames(tmpFrame)[2] <- "measurement"
   
   tmpFrame %>%
+    dplyr::mutate(measurement = str_replace_all(measurement, ",", ".")) %>%
     dplyr::mutate(measurement = as.numeric(measurement),
                   station = station,
                   polutant = polutant)
