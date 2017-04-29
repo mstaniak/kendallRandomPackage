@@ -4,9 +4,9 @@ Process and visualize polish air pollution data, fit GEV distribution and stable
 Installation:
 
 
-library(devtools)
-install_github("mstaniak/kendallRandomPackage")
+>library(devtools)
+>install_github("mstaniak/kendallRandomPackage")
 
 Help:
-?kendallRandomPackage
-browseVignettes(package = "kendallRandomPackage")
+>?kendallRandomPackage
+>browseVignettes(package = "kendallRandomPackage")
