@@ -5,8 +5,10 @@ Installation:
 
 
 >library(devtools)
+
 >install_github("mstaniak/kendallRandomPackage")
 
 Help:
 >?kendallRandomPackage
+
 >browseVignettes(package = "kendallRandomPackage")
