@@ -18,6 +18,7 @@ fitMultiGEV <- function(srcFrame, groupingVariables = c("year", "polutant"), ful
   tmp <- srcFrame %>%
     dplyr::filter(is.finite(maximum)) %>%
     dplyr::group_by_(.dots = groupingVariables) %>%
+    dplyr::filter(length(unique(maximum)) > 2) %>%
     dplyr::summarise(location = egevd(maximum, ...)$parameters[1],
                      scale = egevd(maximum, ...)$parameters[2],
                      shape = egevd(maximum, ...)$parameters[3])
