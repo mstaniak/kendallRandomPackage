@@ -15,4 +15,11 @@ function return n numbers genereted from Kendall stable dist.
 \description{
 Pseudo-random number from Kendall stable distribution
 }
+\examples{
+rKend <- rkend(function(x) 1)
+# Step distribution: delta_{1}
+rKendall <- rKend(10, 0.5)
+# 10 pseudo-random numbers for alpha = 0.5
+
+}
 
