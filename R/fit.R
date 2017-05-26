@@ -76,3 +76,27 @@ cdfsGev <- function(sourceFrame, fittedGEV) {
       theme_bw() +
       ylab("")
 }
+
+
+#' Fit stable Kendall distribution to multiple sets of observations
+#'
+#' @param srcFrame tibble returned by calculateMaxima function
+#' @param groupingVariables chr, vector of names of columns to group by,
+#'        year and polutant by default
+#' @param mAlpha function giving moment of order alpha of the step distribution
+#' @param parAlpha value of alpha parameter
+#'        
+#' @return tibble with empirical CDF, theoretical CDF and theoretical quantiles.
+#'
+#' @export
+#'
+
+addMultiKendall <- function(srcFrame, groupingVariables = c("year", "polutant"), mAlpha = function(x) 1, parAlpha) {
+  tmp <- srcFrame %>%
+    dplyr::filter(is.finite(maximum)) %>%
+    dplyr::group_by_(.dots = groupingVariables) %>%
+    dplyr::filter(length(unique(maximum)) > 2) %>%
+    dplyr::mutate(alphaParameter = parAlpha) %>%
+    dplyr::mutate(empiricalCDF = (1:n())/n(),
+                  theoreticalCDF = (pkend(mAlpha))(maximum, unique(alphaParameter)))
+}
