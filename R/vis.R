@@ -35,7 +35,7 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ) {
     dplyr::ungroup() %>%
     dplyr::select(maximum) %>%
     unlist(use.names = FALSE) %>%
-    quantile(probs = qSeq)
+    quantile(probs = qSeq, na.rm = TRUE)
   qLim <- qkend(function(x) x)
   y <- qLim(qSeq, alpha)
   tibble(x = x, y = y) %>%
@@ -69,9 +69,9 @@ plotQQ <- function(srcTbl, alpha, threshold = 0) {
     dplyr::ungroup() %>%
     dplyr::select(maximum) %>%
     unlist(use.names = FALSE) %>%
-    quantile(probs = seq(0.1, 0.9, 0.1)) # Do poprawy
+    quantile(probs = (1:length(.) - 0.5)/(length(.))) # Do poprawy
   qLim <- qkend(function(x) x)
-  y <- qLim(seq(0.1, 0.9, 0.1), alpha)
+  y <- qLim((1:length(x) - 1)/(length(x) - 1), alpha)
   tibble(x = x, y = y) %>%
     ggplot(aes(x, y)) +
     geom_point() +
