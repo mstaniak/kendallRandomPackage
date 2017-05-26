@@ -6,6 +6,12 @@
 #' 
 #' @export
 #' 
+#' @examples 
+#' dKend <- dkend(function(x) 1)
+#' # Step distribution: delta_{1}
+#' dKendall <- dKend(1:10, 0.5)
+#' # Values of PDF for arguments 1:10 and alpha = 0.5
+#' 
 
 dkend <- function(mAlpha) {
   force(mAlpha)
@@ -26,6 +32,12 @@ dkend <- function(mAlpha) {
 #' @return function function giving values of CDF of Kendall stable distribution
 #' 
 #' @export
+#' 
+#' @examples 
+#' pKend <- pkend(function(x) 1)
+#' # Step distribution: delta_{1}
+#' pKendall <- dKend(1:10, 0.5)
+#' # Values of CDF for arguments 1:10 and alpha = 0.5
 #' 
 
 pkend <- function(mAlpha) {
@@ -48,6 +60,12 @@ pkend <- function(mAlpha) {
 #' 
 #' @export
 #' 
+#' @examples 
+#' qKend <- qkend(function(x) 1)
+#' # Step distribution: delta_{1}
+#' qKendall <- qKend(c(0.1, 0.9), 0.5)
+#' # Quantiles of order 0.1 and 0.9 for alpha = 0.5
+#' 
 
 qkend<- function(mAlpha) {
   force(mAlpha)
@@ -68,6 +86,12 @@ qkend<- function(mAlpha) {
 #' @return function return n numbers genereted from Kendall stable dist.
 #' 
 #' @export
+#' 
+#' @examples 
+#' rKend <- rkend(function(x) 1)
+#' # Step distribution: delta_{1}
+#' rKendall <- rKend(10, 0.5)
+#' # 10 pseudo-random numbers for alpha = 0.5
 #' 
 
 rkend <- function(mAlpha) {
