@@ -1,3 +1,23 @@
+#' Check if there are any measurement on a given stations for chosen year and polutant.
+#' 
+#' @param chosenYear year of measurements
+#' @param chosenPolutant measured polutant
+#' @param station station of interest. Please provide current names of stations (values, not names of stationCodes vector)
+#' 
+#' @return logical value: TRUE if the data is available, FALSE if it's not
+#' 
+#' @export
+#' 
+
+isAvailable <- function(chosenYear, chosenPolutant, station) {
+  availability %>%
+    filter(year == chosenYear,
+           polutant == chosenPolutant) %>%
+    select_(.dots = station) %>%
+    unlist(use.names = FALSE)
+}
+
+
 #' Import from one GIOŚ .xlsx file.
 #'
 #' @param station chr, name of the chosen station.
