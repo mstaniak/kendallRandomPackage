@@ -85,29 +85,32 @@ cdfsGev <- function(sourceFrame, fittedGEV) {
 #' @param groupingVariables chr, vector of names of columns to group by,
 #'        year and polutant by default
 #' @param mAlpha function giving moment of order alpha of the step distribution
+#' @param symmetric if TRUE, symmetrical version of stable Kendall distribution will be used
 #'        
 #' @return tibble with empirical CDF, theoretical CDF and theoretical quantiles.
 #'
 #' @export
 #'
 
-addMultiKendall <- function(srcFrame, parAlpha, normalise = FALSE, groupingVariables = c("year", "polutant"), mAlpha = function(x) 1) {
-  tmp <- srcFrame %>%
+addMultiKendall <- function(srcFrame, parAlpha, normalise = FALSE, groupingVariables = c("year", "polutant"), mAlpha = function(x) x, symmetric = FALSE) {
+ if(symmetric) cdf <- pkendSym(mAlpha)
+ else cdf <- pkend(mAlpha)
+ tmp <- srcFrame %>%
     dplyr::filter(is.finite(maximum)) %>%
-    dplyr::group_by_(.dots = groupingVariables) %>%
     dplyr::filter(length(unique(maximum)) > 2) %>%
+    dplyr::group_by_(.dots = groupingVariables) %>%
     dplyr::arrange(maximum) %>%
     dplyr::mutate(alphaParameter = parAlpha)
   if(normalise) {
     tmp %>%
       dplyr::mutate(maximum = as.numeric(scale(maximum))) %>%
-      dplyr::mutate(empiricalCDF = (1:n())/n(),
-                    theoreticalCDF = (pkendSym(mAlpha))(maximum, unique(alphaParameter)))
+      dplyr::mutate(empirical = (1:n())/n(),
+                    theoretical = cdf(maximum, unique(alphaParameter)))
     
   } else {
     tmp %>%
-      dplyr::mutate(empiricalCDF = (1:n())/n(),
-                    theoreticalCDF = (pkend(mAlpha))(maximum, unique(alphaParameter)))
+      dplyr::mutate(empirical = (1:n())/n(),
+                    theoretical = cdf(maximum, unique(alphaParameter)))
     
   }
 }
@@ -122,11 +125,6 @@ addMultiKendall <- function(srcFrame, parAlpha, normalise = FALSE, groupingVaria
 
 cdfsKendall <- function(sourceFrame) {
   sourceFrame %>%
-    dplyr::filter(is.finite(maximum)) %>%
-    dplyr::arrange(maximum) %>%
-    dplyr::mutate(no = 1:nrow(.)) %>%
-    dplyr::mutate(theoretical = pgevd(maximum, par1, par2, par3),
-                  empirical = no/max(no)) %>%
     tidyr::gather(CDF, value, theoretical, empirical) %>% 
     ggplot(aes(x = maximum, y = value, color = CDF)) +
     geom_point() +
