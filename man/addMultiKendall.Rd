@@ -4,18 +4,21 @@
 \alias{addMultiKendall}
 \title{Fit stable Kendall distribution to multiple sets of observations}
 \usage{
-addMultiKendall(srcFrame, groupingVariables = c("year", "polutant"),
-  mAlpha = function(x) 1, parAlpha)
+addMultiKendall(srcFrame, parAlpha, normalise = FALSE,
+  groupingVariables = c("year", "polutant"), mAlpha = function(x) x,
+  symmetric = FALSE)
 }
 \arguments{
 \item{srcFrame}{tibble returned by calculateMaxima function}
+
+\item{parAlpha}{value of alpha parameter}
 
 \item{groupingVariables}{chr, vector of names of columns to group by,
 year and polutant by default}
 
 \item{mAlpha}{function giving moment of order alpha of the step distribution}
 
-\item{parAlpha}{value of alpha parameter}
+\item{symmetric}{if TRUE, symmetrical version of stable Kendall distribution will be used}
 }
 \value{
 tibble with empirical CDF, theoretical CDF and theoretical quantiles.

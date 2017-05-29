@@ -16,7 +16,7 @@ function function giving values of CDF of Kendall stable distribution
 CDF of symmetrical Kendall stable distribution
 }
 \examples{
-pKend <- pkend(function(x) 1)
+pKend <- pkendSym(function(x) 1)
 # Step distribution: delta_{1}
 pKendall <- dKend(1:10, 0.5)
 # Values of CDF for arguments 1:10 and alpha = 0.5

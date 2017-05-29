@@ -4,7 +4,8 @@
 \alias{plotLargeQQ}
 \title{QQ-plot for large quantiles}
 \usage{
-plotLargeQQ(srcTbl, alpha, minMaxQ, stepQ, meanFunction = function(x) 1)
+plotLargeQQ(srcTbl, alpha, minMaxQ, stepQ, symmetric = FALSE,
+  meanFunction = function(x) 1)
 }
 \arguments{
 \item{srcTbl}{tibble returned by filteredData()}
@@ -14,6 +15,8 @@ plotLargeQQ(srcTbl, alpha, minMaxQ, stepQ, meanFunction = function(x) 1)
 \item{minMaxQ}{minimum and maximum quantile to be used}
 
 \item{stepQ}{step between minimum and maximum quantile}
+
+\item{symmetric}{if TRUE, symmetrical version of stable Kendall distribution will be used}
 
 \item{meanFunction}{function giving moment of order alpha of the step distribution}
 }
