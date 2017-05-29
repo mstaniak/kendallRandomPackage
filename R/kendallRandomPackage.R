@@ -12,9 +12,13 @@
 #' \code{\link{fitMultiGEV}} fits GEV distribution using egevd() function from EnvStats package. 
 #' Resulting table is suitable for further analysis or exploration (like plotting qq-plots, empirical and theoretical CDFs, etc).
 #' \code{\link{addMultiKendall}} add empirical and theoretical CDF values and theoretical quantiles of stable kendall distribution
-#' for given step distribution moment and alpha value.
+#' for given step distribution and alpha value.
 #' \code{\link{kendallRandomApp}} starts a Shiny application that features multiple tools for exploring obtained data, 
 #' including peak over threshold methods.
+#' \code{\link}{cdfsKendall} compare theoretical and empirical CDFs.
+#' 
+#' @section Datasets:
+#' \code{\link{availability}} Check if data are available for given station (column) and year, polutant (row).
 #'
 #' @docType package
 #' @name kendallRandomPackage
