@@ -4,12 +4,14 @@
 \alias{plotQQ}
 \title{Standard QQ-plot}
 \usage{
-plotQQ(srcTbl, alpha, threshold = 0)
+plotQQ(srcTbl, alpha, meanFunction = function(x) 1, threshold = 0)
 }
 \arguments{
 \item{srcTbl}{tibble returned by filteredData()}
 
 \item{alpha}{Kendall stable dist. parameter}
+
+\item{meanFunction}{function giving moment of order alpha of the step distribution}
 
 \item{threshold}{cut-off value for observations}
 }

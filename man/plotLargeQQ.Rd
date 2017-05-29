@@ -4,7 +4,7 @@
 \alias{plotLargeQQ}
 \title{QQ-plot for large quantiles}
 \usage{
-plotLargeQQ(srcTbl, alpha, minMaxQ, stepQ)
+plotLargeQQ(srcTbl, alpha, minMaxQ, stepQ, meanFunction = function(x) 1)
 }
 \arguments{
 \item{srcTbl}{tibble returned by filteredData()}
@@ -14,6 +14,8 @@ plotLargeQQ(srcTbl, alpha, minMaxQ, stepQ)
 \item{minMaxQ}{minimum and maximum quantile to be used}
 
 \item{stepQ}{step between minimum and maximum quantile}
+
+\item{meanFunction}{function giving moment of order alpha of the step distribution}
 }
 \value{
 ggplot2 object

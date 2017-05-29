@@ -4,10 +4,12 @@
 \alias{kendallRandomApp}
 \title{Shiny app for exploring air pollution data}
 \usage{
-kendallRandomApp(sourceFrame)
+kendallRandomApp(sourceFrame, meanFunction = function(x) 1)
 }
 \arguments{
 \item{sourceFrame}{tibble returned by calculateMaxima function.}
+
+\item{meanFunction}{function giving moment of order alpha of Kendall stable distribution.}
 }
 \value{
 shiny app object
