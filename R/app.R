@@ -1,6 +1,7 @@
 #' Shiny app for exploring air pollution data
 #'
 #' @param sourceFrame tibble returned by calculateMaxima function.
+#' @param meanFunction function giving moment of order alpha of Kendall stable distribution.
 #'
 #' @return shiny app object
 #'
@@ -12,7 +13,7 @@
 #' kendallRandomApp(obs2)
 #'
 
-kendallRandomApp <- function(sourceFrame) {
+kendallRandomApp <- function(sourceFrame, meanFunction = function(x) 1) {
   require(shiny)
   allYears <- unique(sourceFrame$year)
   names(allYears) <- allYears
@@ -62,6 +63,7 @@ kendallRandomApp <- function(sourceFrame) {
 			     min = 0, max = maxThreshold, value = maxThreshold/10),
 		 sliderInput("alphaPOT", label = "Alpha parameter",
 			     min = 0.01, max = 0.99, value = 0.5), 
+		 # checkboxInput("symmetricPOT", "Use symmetric distribution", value = FALSE, width = NULL),
 		 selectInput("chosenYear", label = "Year",
 			     choices = allYears, selected = max(allYears))
 		 ),
@@ -71,13 +73,13 @@ kendallRandomApp <- function(sourceFrame) {
       tabPanel("Tails",
 	       value = "largeqq",
 	fluidRow(column(2, id = "tailsInputs",
-		 # Poznać metody dopasowania kwantyli dużego rzędu i zaimplementować tu.
 		 selectInput("chosenPolutantT", label = "Polutant",
 			     choices = allPolutants, selected = allPolutants[1]),
 		 selectInput("chosenYearT", label = "Year",
 			     choices = allYears, selected = max(allYears)),
 		 sliderInput("alpha", label = "Alpha parameter",
 			     min = 0, max = 1, value = 0.5),
+		 # checkboxInput("symmetricLarge", "Use symmetric distribution", value = FALSE, width = NULL),
 		 sliderInput("quantiles", label = "Minimum and maximum quantiles",
 			     min = 0.6, max = 1, value = c(0.8, 0.999)),
 		 sliderInput("quantileStep", 
@@ -158,14 +160,14 @@ kendallRandomApp <- function(sourceFrame) {
 
       output$histPOT <- renderPlot({
 	if(input$plotTypePOT == "hist") plotHist(filteredData(), input$threshold)
-	else if(input$plotTypePOT == "qqplot") plotQQ(filteredData(), input$alphaPOT, input$threshold)
+	else if(input$plotTypePOT == "qqplot") plotQQ(filteredData(), input$alphaPOT, meanFunction, FALSE, input$threshold)
 	else filteredData() %>%
     dplyr::filter(maximum > input$threshold) %>%
     dplyr::mutate(maximum = maximum - input$threshold) %>%
 	  plotEcdf()
       })
       output$largeQuantiles <- renderPlot({
-	plotLargeQQ(filteredData(), input$alpha, input$quantiles, input$quantileStep)
+	plotLargeQQ(filteredData(), input$alpha, input$quantiles, input$quantileStep, FALSE, meanFunction)
       })
       output$overviewPlot <- renderPlot({
 	if(input$plotTypeO == "time") plotTime(filteredData())
