@@ -23,12 +23,13 @@ plotHist <- function(srcTbl, threshold) {
 #' @param alpha Kendall stable distribution parameter
 #' @param minMaxQ minimum and maximum quantile to be used
 #' @param stepQ step between minimum and maximum quantile
+#' @param symmetric if TRUE, symmetrical version of stable Kendall distribution will be used
 #' @param meanFunction function giving moment of order alpha of the step distribution
 #' 
 #' @return ggplot2 object
 #' 
 
-plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ, meanFunction = function(x) 1) {
+plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ, symmetric = FALSE, meanFunction = function(x) 1) {
   qSeq <- seq(minMaxQ[1], minMaxQ[2], stepQ)
   x <- srcTbl %>%
     dplyr::mutate(maximum = as.vector(scale(maximum))) %>%
@@ -41,14 +42,11 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ, meanFunction = function(x
   y <- qLim(qSeq, alpha)
   tibble(x = x, y = y) %>%
     dplyr::filter(is.finite(x),
-           is.finite(y),
-           x < 10,
-           y < 10) %>%
-    ggplot(aes(x, y, label = round(y, 2))) +
-      geom_point() +
-      geom_smooth(method = "lm", se = FALSE) +
-      geom_text() +
-      theme_bw()
+                  is.finite(y)) %>%
+    ggplot(aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE) +
+    theme_bw()
 }
 
 
@@ -57,12 +55,13 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ, meanFunction = function(x
 #' @param srcTbl tibble returned by filteredData()
 #' @param alpha Kendall stable dist. parameter
 #' @param meanFunction function giving moment of order alpha of the step distribution
+#' @param symmetric if TRUE, symmetrical version of stable Kendall distribution will be used
 #' @param threshold cut-off value for observations
 #' 
 #' @return ggplot2 object
 #' 
 
-plotQQ <- function(srcTbl, alpha, meanFunction = function(x) 1, threshold = 0) {
+plotQQ <- function(srcTbl, alpha, meanFunction = function(x) 1, symmetric = FALSE, threshold = 0) {
   x <- srcTbl %>%
     dplyr::filter(is.finite(maximum),
            maximum > threshold) %>%
@@ -71,10 +70,12 @@ plotQQ <- function(srcTbl, alpha, meanFunction = function(x) 1, threshold = 0) {
     dplyr::ungroup() %>%
     dplyr::select(maximum) %>%
     filter(is.finite(maximum)) %>%
-    unlist(use.names = FALSE) %>%
-    quantile(probs = (1:length(.) - 0.5)/(length(.))) # Do poprawy
-  qLim <- qkend(meanFunction)
-  y <- qLim((1:length(x) - 1)/(length(x) - 1), alpha)
+    unlist(use.names = FALSE)
+  prob <- (1:length(x) - 0.5)/(length(x))
+  x <- quantile(x, prob)
+  if(symmetric) qLim <- qkendSym(meanFunction)
+  else qLim <- qkend(meanFunction)
+  y <- qLim(prob, alpha)
   tibble(x = x, y = y) %>%
     ggplot(aes(x, y)) +
     geom_point() +
