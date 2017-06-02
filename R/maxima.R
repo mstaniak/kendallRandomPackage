@@ -15,9 +15,10 @@
 calculateMaxima <- function(sourceFrame, block = "day") {
   years <- unique(year(sourceFrame$measDate))
   sourceFrame %>%
-    dplyr::mutate(measTime = round_date(measDate, block),
+    dplyr::mutate(measTime = floor_date(measDate, block),
 	   year = as.character(year(measDate))) %>%
     dplyr::group_by(year, polutant, measTime) %>%
     dplyr::summarise(maximum = max(measurement, na.rm = TRUE)) %>%
+    # dplyr::mutate(year = as.character(year(measDate))) %>%
     dplyr::filter(year %in% years)
 }
