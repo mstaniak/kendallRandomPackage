@@ -46,7 +46,9 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ, symmetric = FALSE, meanFu
     ggplot(aes(x, y)) +
     geom_point() +
     geom_smooth(method = "lm", se = FALSE) +
-    theme_bw()
+    theme_bw() + 
+    xlab("empirical") +
+    ylab("theoretical")
 }
 
 
@@ -80,7 +82,9 @@ plotQQ <- function(srcTbl, alpha, meanFunction = function(x) 1, symmetric = FALS
     ggplot(aes(x, y)) +
     geom_point() +
     geom_smooth(method = "lm", se = FALSE) +
-    theme_bw()
+    theme_bw() +
+    xlab("empirical") +
+    ylab("theoretical")
 }
 
 
