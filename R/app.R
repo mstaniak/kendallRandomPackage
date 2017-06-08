@@ -2,6 +2,7 @@
 #'
 #' @param sourceFrame tibble returned by calculateMaxima function.
 #' @param meanFunction function giving moment of order alpha of Kendall stable distribution.
+#' @param symmetric If TRUE, symmetrical version of Kendall stable distribution will be used.
 #'
 #' @return shiny app object
 #'
@@ -13,7 +14,7 @@
 #' kendallRandomApp(obs2)
 #'
 
-kendallRandomApp <- function(sourceFrame, meanFunction = function(x) 1) {
+kendallRandomApp <- function(sourceFrame, meanFunction = function(x) 1, symmetric = FALSE) {
   require(shiny)
   allYears <- unique(sourceFrame$year)
   names(allYears) <- allYears
@@ -160,7 +161,7 @@ kendallRandomApp <- function(sourceFrame, meanFunction = function(x) 1) {
 
       output$histPOT <- renderPlot({
 	if(input$plotTypePOT == "hist") plotHist(filteredData(), input$threshold)
-	else if(input$plotTypePOT == "qqplot") plotQQ(filteredData(), input$alphaPOT, meanFunction, FALSE, input$threshold)
+	else if(input$plotTypePOT == "qqplot") plotQQ(filteredData(), input$alphaPOT, meanFunction, symmetric, input$threshold)
 	else filteredData() %>%
     dplyr::filter(maximum > input$threshold) %>%
     dplyr::mutate(maximum = maximum - input$threshold) %>%

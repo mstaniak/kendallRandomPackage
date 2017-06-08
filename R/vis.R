@@ -67,8 +67,12 @@ plotQQ <- function(srcTbl, alpha, meanFunction = function(x) 1, symmetric = FALS
   x <- srcTbl %>%
     dplyr::filter(is.finite(maximum),
            maximum > threshold) %>%
-    dplyr::mutate(maximum = maximum - threshold) %>%
-    dplyr::mutate(maximum = as.vector(scale(maximum))) %>%
+    dplyr::mutate(maximum = maximum - threshold)
+  if(symmetric) {
+    x <-  x %>%
+      dplyr::mutate(maximum = as.vector(scale(maximum)))
+  }
+  x <- x %>%
     dplyr::ungroup() %>%
     dplyr::select(maximum) %>%
     filter(is.finite(maximum)) %>%
