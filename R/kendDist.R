@@ -123,7 +123,7 @@ pkendSym <- function(mAlpha) {
   force(mAlpha)
   function(x, alpha) {
     Ft <- function(y) {
-      0.5*(1 + mAlpha(alpha)*(y^((-1)*alpha)) + exp(mAlpha(alpha)*(y^((-1)*alpha))))*exp((-1)*(y^((-1)*alpha)))
+      0.5*(1 + mAlpha(alpha)*(y^((-1)*alpha)) + exp(mAlpha(alpha)*(y^((-1)*alpha))))*exp((-1)*mAlpha(alpha)*(y^((-1)*alpha)))
     }
     sapply(x, function(y) {
       if(!is.finite(y)) return(NA)
