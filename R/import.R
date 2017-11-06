@@ -30,6 +30,8 @@ isAvailable <- function(chosenYear, chosenPolutant, station) {
 #' @param exact lgl, TRUE if path is a path to .xlsx file.
 #'
 #' @return tibble
+#' 
+#' @export
 #'
 
 importOneXLSX <- function(station, polutant, year, path = getwd(),
