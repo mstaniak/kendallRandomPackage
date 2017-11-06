@@ -143,9 +143,9 @@ importOneCSV <- function(station, polutant, year, path = getwd(),
     fileList <- path
   }  else {
     fileList <- list.files(path, pattern = "*.csv") %>%
-      grep(pattern = year, value = TRUE) %>%
-      grep(pattern = polutant, value = TRUE) %>%
-      grep(pattern = paste0(noHours, "g"), value = TRUE)
+      grep(pattern = year, value = TRUE, fixed = T) %>%
+      grep(pattern = polutant, value = TRUE, fixed = T) %>%
+      grep(pattern = paste0(noHours, "g", fixed = T), value = TRUE)
   }
   
   emptyFrame <- tibble(measDate = character(0),
