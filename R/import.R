@@ -55,18 +55,18 @@ importOneXLSX <- function(station, polutant, year, path = getwd(),
   srcFile <- paste(path, fileList, sep = "/")
   colNames <- colnames(read_excel(srcFile))
 
-  if(!sum(grepl(colNames, pattern = station))) {
-    isOld  <- sum(grepl(names(stationCodes), pattern = station))
-    isNew <- sum(grepl(stationCodes, pattern = station))
-    if(isOld) {
-      station <- stationCodes[station]
-    } else if(isNew) {
-      station <- names(stationCodes)[grep(stationCodes, pattern = station)]
-    }
-    if(!sum(grepl(colNames, pattern = station))) {
-      return(emptyFrame)
-    }
-  }
+  # if(!sum(grepl(colNames, pattern = station))) {
+  #   isOld  <- sum(grepl(names(stationCodes), pattern = station))
+  #   isNew <- sum(grepl(stationCodes, pattern = station))
+  #   if(isOld) {
+  #     station <- stationCodes[station]
+  #   } else if(isNew) {
+  #     station <- names(stationCodes)[grep(stationCodes, pattern = station)]
+  #   }
+  #   if(!sum(grepl(colNames, pattern = station))) {
+  #     return(emptyFrame)
+  #   }
+  # }
 
   tmpFrame <- as_tibble(read_excel(srcFile, skip = skip, col_names = FALSE))
   colnames(tmpFrame) <- colNames
