@@ -161,18 +161,18 @@ importOneCSV <- function(station, polutant, year, path = getwd(),
   tmpFrame <- tmpFrame[-(1:2), ]
   colNames <- colnames(tmpFrame)
   
-  if(!sum(grepl(colNames, pattern = station))) {
-    isOld  <- sum(grepl(names(stationCodes), pattern = station))
-    isNew <- sum(grepl(stationCodes, pattern = station))
-    if(isOld) {
-      station <- stationCodes[station]
-    } else if(isNew) {
-      station <- names(stationCodes)[grepl(x = stationCodes, pattern = station)]
-    }
-    if(!sum(grepl(colNames, pattern = station))) {
-      return(emptyFrame)
-    }
-  }
+  # if(!sum(grepl(colNames, pattern = station))) {
+  #   isOld  <- sum(grepl(names(stationCodes), pattern = station))
+  #   isNew <- sum(grepl(stationCodes, pattern = station))
+  #   if(isOld) {
+  #     station <- stationCodes[station]
+  #   } else if(isNew) {
+  #     station <- names(stationCodes)[grepl(x = stationCodes, pattern = station)]
+  #   }
+  #   if(!sum(grepl(colNames, pattern = station))) {
+  #     return(emptyFrame)
+  #   }
+  # }
   
   tmpFrame <- tmpFrame[, c("measDate", station)]
   colnames(tmpFrame)[2] <- "measurement"
