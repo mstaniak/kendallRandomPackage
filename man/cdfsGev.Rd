@@ -17,4 +17,3 @@ ggplot2 object
 \description{
 Compare theorical and empirical CDF for fitted GEV distribution.
 }
-

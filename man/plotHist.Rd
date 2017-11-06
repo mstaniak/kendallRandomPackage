@@ -17,4 +17,3 @@ ggplot2 object
 \description{
 Plot histogram of values over given threshold
 }
-

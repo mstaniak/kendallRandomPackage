@@ -26,4 +26,3 @@ tibble with empirical CDF, theoretical CDF and theoretical quantiles.
 \description{
 Fit stable Kendall distribution to multiple sets of observations
 }
-

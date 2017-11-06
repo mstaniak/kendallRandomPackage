@@ -9,4 +9,3 @@ simulateOneTrajectory(trajectoryLength, stepDist, parAlpha, ...)
 \description{
 Simulate one trajectory of a Kendall random walk
 }
-

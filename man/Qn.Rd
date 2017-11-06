@@ -9,4 +9,3 @@ Qn(x, y, alfa)
 \description{
 Helper function
 }
-

@@ -62,6 +62,8 @@ plotLargeQQ <- function(srcTbl, alpha, minMaxQ, stepQ, symmetric = FALSE, meanFu
 #' 
 #' @return ggplot2 object
 #' 
+#' @export
+#' 
 
 plotQQ <- function(srcTbl, alpha, meanFunction = function(x) 1, symmetric = FALSE, threshold = 0) {
   x <- srcTbl %>%
@@ -115,6 +117,8 @@ plotTime <- function(srcTbl, datesRange = "") {
 #' @param srcTbl tibble returned by filteredData()
 #' 
 #' @return ggplot2 object
+#' 
+#' @export
 #' 
 
 plotEcdf <- function(srcTbl) {

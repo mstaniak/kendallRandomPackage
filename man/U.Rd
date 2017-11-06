@@ -9,4 +9,3 @@ U(x, y)
 \description{
 Helper function
 }
-

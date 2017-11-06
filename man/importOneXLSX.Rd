@@ -29,4 +29,3 @@ tibble
 \description{
 Import from one GIOŚ .xlsx file.
 }
-

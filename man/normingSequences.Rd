@@ -19,4 +19,3 @@ tibble
 \description{
 Normalising Kendall random walks
 }
-

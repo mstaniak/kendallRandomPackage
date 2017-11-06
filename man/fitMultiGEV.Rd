@@ -26,4 +26,3 @@ tibble as described in help for full argument
 \description{
 Fit GEV distribution to multiple sets of observations
 }
-

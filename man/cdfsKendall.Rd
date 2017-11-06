@@ -15,4 +15,3 @@ ggplot2 object
 \description{
 Compare theorical and empirical CDF for stable Kendall distribution.
 }
-

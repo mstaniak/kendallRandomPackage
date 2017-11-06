@@ -22,4 +22,3 @@ rKendall <- rKend(10, 0.5)
 # 10 pseudo-random numbers for alpha = 0.5
 
 }
-

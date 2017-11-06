@@ -26,4 +26,3 @@ ggplot2 object
 \description{
 QQ-plot for large quantiles
 }
-

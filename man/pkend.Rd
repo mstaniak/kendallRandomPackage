@@ -22,4 +22,3 @@ pKendall <- dKend(1:10, 0.5)
 # Values of CDF for arguments 1:10 and alpha = 0.5
 
 }
-

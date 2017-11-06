@@ -24,4 +24,3 @@ ggplot2 object
 \description{
 Standard QQ-plot
 }
-

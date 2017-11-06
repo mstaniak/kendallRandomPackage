@@ -26,4 +26,3 @@ obs2 <- calculateMaxima(obs)
 kendallRandomApp(obs2)
 
 }
-

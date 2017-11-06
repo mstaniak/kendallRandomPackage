@@ -19,4 +19,3 @@ logical value: TRUE if the data is available, FALSE if it's not
 \description{
 Check if there are any measurement on a given stations for chosen year and polutant.
 }
-

@@ -17,4 +17,3 @@ ggplot2 object
 \description{
 QQ-plot for fited GEV distribution
 }
-

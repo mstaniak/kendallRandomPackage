@@ -15,4 +15,3 @@ ggplot2 object
 \description{
 Plot of data over time
 }
-

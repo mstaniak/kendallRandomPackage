@@ -36,4 +36,3 @@ importGiosFromXLSX("DsWrocKorzA", c("NOx", "SO2"), c("2015", "2014"), "path-to-t
 # Importing from a different (not working) directory.
 
 }
-

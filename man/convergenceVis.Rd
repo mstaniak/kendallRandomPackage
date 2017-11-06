@@ -17,4 +17,3 @@ ggplot2 object
 \description{
 Draw simulated trajectories
 }
-

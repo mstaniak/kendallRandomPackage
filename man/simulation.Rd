@@ -18,4 +18,3 @@ simulation(simulationNumber, trajectoryLength, stepDist, parAlpha, ...)
 \description{
 Simulate multiple trajectories of Kendall random walk
 }
-
