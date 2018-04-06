@@ -1,14 +1,10 @@
 # kendallRandomPackage
-Process and visualize polish air pollution data, fit GEV distribution and stable Kendall distributions.
+Simulations and distributions related to Kendall random walks:
+[visit dedicated project page on Researchgate](https://www.researchgate.net/project/First-order-Kendall-maximal-autoregressive-processes-and-their-applications)
 
-Installation:
+Install the newest version:
 
-
->library(devtools)
-
->install_github("mstaniak/kendallRandomPackage")
+>devtools::install_github("mstaniak/kendallRandomPackage")
 
 Help:
 >?kendallRandomPackage
-
->browseVignettes(package = "kendallRandomPackage")
