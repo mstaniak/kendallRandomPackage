@@ -4,7 +4,7 @@
 \alias{estimate_scale}
 \title{Estimate scale parameter of generalized stable Kendall distribution}
 \usage{
-estimate_scale(data, m_alpha, ...)
+estimate_scale(data, m_alpha)
 }
 \arguments{
 \item{data}{numeric vector of observations}

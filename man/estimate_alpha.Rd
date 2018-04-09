@@ -4,7 +4,7 @@
 \alias{estimate_alpha}
 \title{Estimate alpha parameter of stable Kendall distribution}
 \usage{
-estimate_alpha(data, m_alpha, ...)
+estimate_alpha(data, m_alpha)
 }
 \arguments{
 \item{data}{numeric vector of observations}

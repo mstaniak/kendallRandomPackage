@@ -10,6 +10,8 @@ fit_kendall(data, m_alpha, quantiles)
 \item{data}{Numeric vector of observation to which the distribution will be fitted.}
 
 \item{m_alpha}{m_alpha function which will be used.}
+
+\item{quantiles}{vector of quantile range to be estimated.}
 }
 \value{
 fitted quantiles

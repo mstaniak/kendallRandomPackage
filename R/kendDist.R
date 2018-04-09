@@ -1,6 +1,6 @@
 #' PDF of Kendall stable distribution
 #'
-#' @param mAlpha function giving moments of order alpha of step dist.
+#' @param m_alpha function giving moments of order alpha of step dist.
 #'
 #' @return function that returns values of the PDF
 #'
@@ -14,13 +14,13 @@
 #' }
 #'
 
-dkend <- function(mAlpha) {
-  force(mAlpha)
+dkend <- function(m_alpha) {
+  force(m_alpha)
   function(x, alpha, mu = 0, sigma = 1) {
     sapply(x, function(y) {
       if(!is.finite(y)) return(NA)
       else if((y - mu)/sigma <= 0) 0
-      else (alpha/sigma)*(mAlpha(alpha)^2)*((y - mu)/sigma)^(-(2*alpha + 1))*exp(-mAlpha(alpha)*((y - mu)/sigma)^(-alpha))
+      else (alpha/sigma)*(m_alpha(alpha)^2)*((y - mu)/sigma)^(-(2*alpha + 1))*exp(-m_alpha(alpha)*((y - mu)/sigma)^(-alpha))
     })
   }
 }
@@ -28,7 +28,7 @@ dkend <- function(mAlpha) {
 
 #' CDF of Kendall stable distribution
 #'
-#' @param mAlpha function giving moments of order alpha of step dist.
+#' @param m_alpha function giving moments of order alpha of step dist.
 #'
 #' @return function function giving values of CDF of Kendall stable distribution
 #'
@@ -42,13 +42,13 @@ dkend <- function(mAlpha) {
 #' }
 #'
 
-pkend <- function(mAlpha) {
-  force(mAlpha)
+pkend <- function(m_alpha) {
+  force(m_alpha)
   function(x, alpha, mu = 0, sigma = 1) {
     sapply(x, function(y) {
       if(!is.finite(y)) return(NA)
       else if((y - mu)/sigma <= 0) 0
-      else (1 + mAlpha(alpha)*((y - mu)/sigma)^(-alpha))*exp(-mAlpha(alpha)*((y - mu)/sigma)^(-alpha))
+      else (1 + m_alpha(alpha)*((y - mu)/sigma)^(-alpha))*exp(-m_alpha(alpha)*((y - mu)/sigma)^(-alpha))
     })
   }
 }
@@ -56,7 +56,7 @@ pkend <- function(mAlpha) {
 
 #' Quantiles of Kendall stable distribution
 #'
-#' @param mAlpha function giving moments of order alpha of step dist.
+#' @param m_alpha function giving moments of order alpha of step dist.
 #'
 #' @return function function returning quantiles of given orders
 #'
@@ -70,13 +70,13 @@ pkend <- function(mAlpha) {
 #' }
 #'
 
-qkend<- function(mAlpha) {
-  force(mAlpha)
+qkend<- function(m_alpha) {
+  force(m_alpha)
   function(p, alpha, mu = 0, sigma = 1) {
-    oCDF <- function(x) pkend(mAlpha)(x, alpha, mu, sigma)
+    oCDF <- function(x) pkend(m_alpha)(x, alpha, mu, sigma)
     sapply(p, function(q) {
       if(!is.finite(q)) return(NA)
-      else uniroot({function(x) oCDF(x) - q}, lower = 0, upper = 10^80)$root
+      else stats::uniroot({function(x) oCDF(x) - q}, lower = 0, upper = 10^80)$root
     })
   }
 }
@@ -84,26 +84,20 @@ qkend<- function(mAlpha) {
 
 #' Pseudo-random number from Kendall stable distribution
 #'
-#' @param mAlpha function giving moments of order alpha of step dist.
+#' @param m_alpha function giving moments of order alpha of step dist.
 #'
 #' @return function return n numbers genereted from Kendall stable dist.
 #'
 #' @export
 #'
-#' @examples {
-#' rKend <- rkend(function(x) 1)
-#' # Step distribution: delta_{1}
-#' rKendall <- rKend(10, 0.5)
-#' # 10 pseudo-random numbers for alpha = 0.5
-#' }
-#'
 
-rkend <- function(mAlpha) {
-  force(mAlpha)
+
+rkend <- function(m_alpha) {
+  force(m_alpha)
+  qKend <- qkend(m_alpha)
   function(n, alpha, mu = 0, sigma = 1) {
     sapply(1:n, {function(x)
-      qKend <- qkend(mAlpha)
-      qKend(runif(1, 0, 1), alpha, mu, sigma)
+      qKend(stats::runif(1, 0, 1), alpha, mu, sigma)
     })
   }
 }
@@ -111,7 +105,7 @@ rkend <- function(mAlpha) {
 
 #' CDF of symmetrical Kendall stable distribution
 #'
-#' @param mAlpha function giving moments of order alpha of step dist.
+#' @param m_alpha function giving moments of order alpha of step dist.
 #'
 #' @return function function giving values of CDF of Kendall stable distribution
 #'
@@ -125,11 +119,11 @@ rkend <- function(mAlpha) {
 #' }
 #'
 
-pkendSym <- function(mAlpha) {
-  force(mAlpha)
+pkendSym <- function(m_alpha) {
+  force(m_alpha)
   function(x, alpha, mu = 0, sigma = 1) {
     Ft <- function(y) {
-      0.5*(1 + mAlpha(alpha)*(y^((-1)*alpha)) + exp(mAlpha(alpha)*(y^((-1)*alpha))))*exp((-1)*mAlpha(alpha)*(y^((-1)*alpha)))
+      0.5*(1 + m_alpha(alpha)*(y^((-1)*alpha)) + exp(m_alpha(alpha)*(y^((-1)*alpha))))*exp((-1)*m_alpha(alpha)*(y^((-1)*alpha)))
     }
     sapply(x, function(y) {
       if(!is.finite(y)) return(NA)
@@ -143,7 +137,7 @@ pkendSym <- function(mAlpha) {
 
 #' Quantiles of symmetrical Kendall stable distribution
 #'
-#' @param mAlpha function giving moments of order alpha of step dist.
+#' @param m_alpha function giving moments of order alpha of step dist.
 #'
 #' @return function function returning quantiles of given orders
 #'
@@ -157,10 +151,10 @@ pkendSym <- function(mAlpha) {
 #' }
 #'
 
-qkendSym <- function(mAlpha) {
-  force(mAlpha)
+qkendSym <- function(m_alpha) {
+  force(m_alpha)
   function(p, alpha, mu = 0, sigma = 1) {
-    oCDF <- function(x) pkendSym(mAlpha)(x, alpha)
+    oCDF <- function(x) pkendSym(m_alpha)(x, alpha)
     sapply(p, function(q) {
       if(!is.finite(q)) return(NA)
       else if(q >= 0.5) stats::uniroot({function(x) oCDF(x) - q}, lower = 0, upper = 10^80)$root

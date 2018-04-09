@@ -6,6 +6,14 @@
 \usage{
 U(x, y)
 }
+\arguments{
+\item{x}{numeric}
+
+\item{y}{numeric}
+}
+\value{
+sign of the argument whose abs. val. is bigger
+}
 \description{
 Helper function
 }

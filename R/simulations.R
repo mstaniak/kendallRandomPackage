@@ -25,6 +25,12 @@ Qn <- function(x, y, alpha){
 }
 
 #' Helper function
+#'
+#' @param x numeric
+#' @param y numeric
+#'
+#' @return sign of the argument whose abs. val. is bigger
+#'
 
 U <- function(x, y){
   if(abs(x)>abs(y)) sign(x)

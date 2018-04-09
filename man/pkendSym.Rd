@@ -4,10 +4,10 @@
 \alias{pkendSym}
 \title{CDF of symmetrical Kendall stable distribution}
 \usage{
-pkendSym(mAlpha)
+pkendSym(m_alpha)
 }
 \arguments{
-\item{mAlpha}{function giving moments of order alpha of step dist.}
+\item{m_alpha}{function giving moments of order alpha of step dist.}
 }
 \value{
 function function giving values of CDF of Kendall stable distribution

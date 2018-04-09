@@ -4,10 +4,10 @@
 \alias{qkend}
 \title{Quantiles of Kendall stable distribution}
 \usage{
-qkend(mAlpha)
+qkend(m_alpha)
 }
 \arguments{
-\item{mAlpha}{function giving moments of order alpha of step dist.}
+\item{m_alpha}{function giving moments of order alpha of step dist.}
 }
 \value{
 function function returning quantiles of given orders

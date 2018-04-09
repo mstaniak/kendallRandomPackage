@@ -46,7 +46,7 @@ qqPlotGev <- function(sourceFrame, fittedGEV) {
     dplyr::arrange(maximum) %>%
     dplyr::mutate(no = 1:nrow(.)) %>%
     dplyr::mutate(theoretical = qgevd(no/(max(no) + 1), par1, par2, par3),
-	                empirical = quantile(maximum, no/(max(no) + 1))) %>%
+	                empirical = stats::quantile(maximum, no/(max(no) + 1))) %>%
     ggplot2::ggplot(aes(x = theoretical, y = empirical)) +
       ggplot2::geom_point() +
       ggplot2::theme_bw()
@@ -81,10 +81,11 @@ cdfsGev <- function(sourceFrame, fittedGEV) {
 #' Fit stable Kendall distribution to multiple sets of observations
 #'
 #' @param srcFrame tibble returned by calculateMaxima function
-#' @param parAlpha value of alpha parameter
+#' @param alpha value of alpha parameter
+#' @param normalise If TRUE, maximums will be scaled and centered.
 #' @param groupingVariables chr, vector of names of columns to group by,
 #'        year and polutant by default
-#' @param mAlpha function giving moment of order alpha of the step distribution
+#' @param m_alpha function giving moment of order alpha of the step distribution
 #' @param symmetric if TRUE, symmetrical version of stable Kendall distribution will be used
 #'
 #' @return tibble with empirical CDF, theoretical CDF and theoretical quantiles.
@@ -92,25 +93,27 @@ cdfsGev <- function(sourceFrame, fittedGEV) {
 #' @export
 #'
 
-addMultiKendall <- function(srcFrame, parAlpha, normalise = FALSE, groupingVariables = c("year", "polutant"), mAlpha = function(x) x, symmetric = FALSE) {
- if(symmetric) cdf <- pkendSym(mAlpha)
- else cdf <- pkend(mAlpha)
+addMultiKendall <- function(srcFrame, alpha, normalise = FALSE,
+                            groupingVariables = c("year", "polutant"),
+                            m_alpha = function(x) x, symmetric = FALSE) {
+ if(symmetric) cdf <- pkendSym(m_alpha)
+ else cdf <- pkend(m_alpha)
  tmp <- srcFrame %>%
     dplyr::filter(is.finite(maximum)) %>%
     dplyr::filter(length(unique(maximum)) > 2) %>%
     dplyr::group_by_(.dots = groupingVariables) %>%
     dplyr::arrange(maximum) %>%
-    dplyr::mutate(alphaParameter = parAlpha)
+    dplyr::mutate(alphar_parameter = alpha)
   if(normalise) {
     tmp %>%
       dplyr::mutate(maximum = as.numeric(scale(maximum))) %>%
       dplyr::mutate(empirical = (1:n())/n(),
-                    theoretical = cdf(maximum, unique(alphaParameter)))
+                    theoretical = cdf(maximum, unique(alphar_parameter)))
 
   } else {
     tmp %>%
       dplyr::mutate(empirical = (1:n())/n(),
-                    theoretical = cdf(maximum, unique(alphaParameter)))
+                    theoretical = cdf(maximum, unique(alphar_parameter)))
 
   }
 }

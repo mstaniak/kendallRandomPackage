@@ -8,7 +8,7 @@
 #' @export
 #'
 
-estimate_alpha <- function(data, m_alpha, ...) {
+estimate_alpha <- function(data, m_alpha) {
   0.8 # TODO
 }
 
@@ -22,7 +22,7 @@ estimate_alpha <- function(data, m_alpha, ...) {
 #' @export
 #'
 
-estimate_location <- function(data, m_alpha, ...) {
+estimate_location <- function(data, m_alpha) {
   0 # TODO
 }
 
@@ -36,7 +36,7 @@ estimate_location <- function(data, m_alpha, ...) {
 #' @export
 #'
 
-estimate_scale <- function(data, m_alpha, ...) {
+estimate_scale <- function(data, m_alpha) {
   1 # TODO
 }
 
@@ -44,6 +44,7 @@ estimate_scale <- function(data, m_alpha, ...) {
 #'
 #' @param data Numeric vector of observation to which the distribution will be fitted.
 #' @param m_alpha m_alpha function which will be used.
+#' @param quantiles vector of quantile range to be estimated.
 #'
 #' @return fitted quantiles
 #'

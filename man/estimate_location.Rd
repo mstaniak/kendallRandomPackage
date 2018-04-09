@@ -4,7 +4,7 @@
 \alias{estimate_location}
 \title{Estimate location parameter of generalized stable Kendall distribution}
 \usage{
-estimate_location(data, m_alpha, ...)
+estimate_location(data, m_alpha)
 }
 \arguments{
 \item{data}{numeric vector of observations}
