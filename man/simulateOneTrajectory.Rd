@@ -2,10 +2,20 @@
 % Please edit documentation in R/simulations.R
 \name{simulateOneTrajectory}
 \alias{simulateOneTrajectory}
-\title{Simulate one trajectory of a Kendall random walk}
+\title{Simulate one trajectory ofa Kendall random walk}
 \usage{
-simulateOneTrajectory(trajectoryLength, stepDist, parAlpha, ...)
+simulateOneTrajectory(trajectory_length, step_dist, alpha, ...)
+}
+\arguments{
+\item{trajectory_length}{Number of samples to simulate.}
+
+\item{step_dist}{Function that returns random numbers from step distribution.}
+
+\item{alpha}{Alpha parameter of the random walk}
+}
+\value{
+Generated path of the random walk.
 }
 \description{
-Simulate one trajectory of a Kendall random walk
+Simulate one trajectory ofa Kendall random walk
 }

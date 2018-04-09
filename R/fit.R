@@ -8,7 +8,7 @@
 #'        If FALSE, just parameters (with corresponding values of grouping variables)
 #'        will be returned.
 #' @param ... additional parameters passed to egevd() function
-#'        
+#'
 #' @return tibble as described in help for full argument
 #'
 #' @export
@@ -19,18 +19,18 @@ fitMultiGEV <- function(srcFrame, groupingVariables = c("year", "polutant"), ful
     dplyr::filter(is.finite(maximum)) %>%
     dplyr::group_by_(.dots = groupingVariables) %>%
     dplyr::filter(length(unique(maximum)) > 2) %>%
-    dplyr::summarise(location = egevd(maximum, ...)$parameters[1],
-                     scale = egevd(maximum, ...)$parameters[2],
-                     shape = egevd(maximum, ...)$parameters[3])
+    dplyr::summarise(location = EnvStats::egevd(maximum, ...)$parameters[1],
+                     scale = EnvStats::egevd(maximum, ...)$parameters[2],
+                     shape = EnvStats::egevd(maximum, ...)$parameters[3])
   if(full) srcFrame %>%
-    left_join(tmp, by = groupingVariables) %>%
-    arrange_(.dots = groupingVariables)
+    dplyr::left_join(tmp, by = groupingVariables) %>%
+    dplyr::arrange_(.dots = groupingVariables)
   else tmp
 }
 
 
 #' QQ-plot for fited GEV distribution
-#' 
+#'
 #' @param sourceFrame tibble returned by filteredData()
 #' @param fittedGEV list returned by egevd function
 #'
@@ -47,9 +47,9 @@ qqPlotGev <- function(sourceFrame, fittedGEV) {
     dplyr::mutate(no = 1:nrow(.)) %>%
     dplyr::mutate(theoretical = qgevd(no/(max(no) + 1), par1, par2, par3),
 	                empirical = quantile(maximum, no/(max(no) + 1))) %>%
-    ggplot(aes(x = theoretical, y = empirical)) +
-      geom_point() +
-      theme_bw()
+    ggplot2::ggplot(aes(x = theoretical, y = empirical)) +
+      ggplot2::geom_point() +
+      ggplot2::theme_bw()
 }
 
 #' Compare theorical and empirical CDF for fitted GEV distribution.
@@ -70,11 +70,11 @@ cdfsGev <- function(sourceFrame, fittedGEV) {
     dplyr::mutate(no = 1:nrow(.)) %>%
     dplyr::mutate(theoretical = pgevd(maximum, par1, par2, par3),
            empirical = no/max(no)) %>%
-    tidyr::gather(CDF, value, theoretical, empirical) %>% 
-    ggplot(aes(x = maximum, y = value, color = CDF)) +
-      geom_point() +
-      theme_bw() +
-      ylab("")
+    tidyr::gather(CDF, value, theoretical, empirical) %>%
+    ggplot2::ggplot(aes(x = maximum, y = value, color = CDF)) +
+      ggplot2::geom_point() +
+      ggplot2::theme_bw() +
+      ggplot2::ylab("")
 }
 
 
@@ -86,7 +86,7 @@ cdfsGev <- function(sourceFrame, fittedGEV) {
 #'        year and polutant by default
 #' @param mAlpha function giving moment of order alpha of the step distribution
 #' @param symmetric if TRUE, symmetrical version of stable Kendall distribution will be used
-#'        
+#'
 #' @return tibble with empirical CDF, theoretical CDF and theoretical quantiles.
 #'
 #' @export
@@ -106,12 +106,12 @@ addMultiKendall <- function(srcFrame, parAlpha, normalise = FALSE, groupingVaria
       dplyr::mutate(maximum = as.numeric(scale(maximum))) %>%
       dplyr::mutate(empirical = (1:n())/n(),
                     theoretical = cdf(maximum, unique(alphaParameter)))
-    
+
   } else {
     tmp %>%
       dplyr::mutate(empirical = (1:n())/n(),
                     theoretical = cdf(maximum, unique(alphaParameter)))
-    
+
   }
 }
 
@@ -125,9 +125,9 @@ addMultiKendall <- function(srcFrame, parAlpha, normalise = FALSE, groupingVaria
 
 cdfsKendall <- function(sourceFrame) {
   sourceFrame %>%
-    tidyr::gather(CDF, value, theoretical, empirical) %>% 
-    ggplot(aes(x = maximum, y = value, color = CDF)) +
-    geom_point() +
-    theme_bw() +
-    ylab("")
+    tidyr::gather(CDF, value, theoretical, empirical) %>%
+    ggplot2::ggplot(aes(x = maximum, y = value, color = CDF)) +
+      ggplot2::geom_point() +
+      ggplot2::theme_bw() +
+      ggplot2::ylab("")
 }

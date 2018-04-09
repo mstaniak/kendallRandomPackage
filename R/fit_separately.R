@@ -12,7 +12,8 @@ estimate_alpha <- function(data, m_alpha, ...) {
   0.8 # TODO
 }
 
-# Estimate location parameter of generalized stable Kendall distribution
+#' Estimate location parameter of generalized stable Kendall distribution
+#'
 #' @param data numeric vector of observations
 #' @param m_alpha m_alpha function to be used
 #'
@@ -41,8 +42,8 @@ estimate_scale <- function(data, m_alpha, ...) {
 
 #' Fit stable Kendall distribution for given data and m_alpha function.
 #'
-#' @param data
-#' @param m_alpha
+#' @param data Numeric vector of observation to which the distribution will be fitted.
+#' @param m_alpha m_alpha function which will be used.
 #'
 #' @return fitted quantiles
 #'
@@ -75,7 +76,7 @@ fit_separate <- function(data, m_alpha, separation_point) {
   if(n_obs == 0) {
     stop("No legal observations were provided")
   }
-  kendall_quantiles <- kendallRandompackage::qkend(m_alpha)
+  kendall_quantiles <- qkend(m_alpha)
   separate <- stats::quantile(data, separation_point)
   all_quantiles <- (1:n_obs - 0.5)/n_obs
   lower_quantiles <- all_quantiles[all_quantiles <= separation_point]

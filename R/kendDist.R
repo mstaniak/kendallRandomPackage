@@ -6,11 +6,12 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examples {
 #' dKend <- dkend(function(x) 1)
 #' # Step distribution: delta_{1}
 #' dKendall <- dKend(1:10, 0.5)
 #' # Values of PDF for arguments 1:10 and alpha = 0.5
+#' }
 #'
 
 dkend <- function(mAlpha) {
@@ -33,11 +34,12 @@ dkend <- function(mAlpha) {
 #'
 #' @export
 #'
-#' @examples
+#' @examples {
 #' pKend <- pkend(function(x) 1)
 #' # Step distribution: delta_{1}
-#' pKendall <- dKend(1:10, 0.5)
+#' pKendall <- pKend(1:10, 0.5)
 #' # Values of CDF for arguments 1:10 and alpha = 0.5
+#' }
 #'
 
 pkend <- function(mAlpha) {
@@ -60,11 +62,12 @@ pkend <- function(mAlpha) {
 #'
 #' @export
 #'
-#' @examples
+#' @examples {
 #' qKend <- qkend(function(x) 1)
 #' # Step distribution: delta_{1}
 #' qKendall <- qKend(c(0.1, 0.9), 0.5)
 #' # Quantiles of order 0.1 and 0.9 for alpha = 0.5
+#' }
 #'
 
 qkend<- function(mAlpha) {
@@ -87,18 +90,20 @@ qkend<- function(mAlpha) {
 #'
 #' @export
 #'
-#' @examples
+#' @examples {
 #' rKend <- rkend(function(x) 1)
 #' # Step distribution: delta_{1}
 #' rKendall <- rKend(10, 0.5)
 #' # 10 pseudo-random numbers for alpha = 0.5
+#' }
 #'
 
 rkend <- function(mAlpha) {
   force(mAlpha)
   function(n, alpha, mu = 0, sigma = 1) {
     sapply(1:n, {function(x)
-      qkend(runif(1, 0, 1), mAlpha, alpha, mu, sigma)
+      qKend <- qkend(mAlpha)
+      qKend(runif(1, 0, 1), alpha, mu, sigma)
     })
   }
 }
@@ -112,11 +117,12 @@ rkend <- function(mAlpha) {
 #'
 #' @export
 #'
-#' @examples
+#' @examples {
 #' pKend <- pkendSym(function(x) 1)
 #' # Step distribution: delta_{1}
 #' pKendall <- pKend(1:10, 0.5)
 #' # Values of CDF for arguments 1:10 and alpha = 0.5
+#' }
 #'
 
 pkendSym <- function(mAlpha) {
@@ -143,11 +149,12 @@ pkendSym <- function(mAlpha) {
 #'
 #' @export
 #'
-#' @examples
+#' @examples {
 #' qKend <- qkendSym(function(x) 1)
 #' # Step distribution: delta_{1}
 #' qKendall <- qKend(c(0.1, 0.9), 0.5)
 #' # Quantiles of order 0.1 and 0.9 for alpha = 0.5
+#' }
 #'
 
 qkendSym <- function(mAlpha) {
@@ -156,8 +163,8 @@ qkendSym <- function(mAlpha) {
     oCDF <- function(x) pkendSym(mAlpha)(x, alpha)
     sapply(p, function(q) {
       if(!is.finite(q)) return(NA)
-      else if(q >= 0.5) uniroot({function(x) oCDF(x) - q}, lower = 0, upper = 10^80)$root
-      else (-1)*uniroot({function(x) oCDF(x) - (1 - q)}, lower = 0, upper = 10^80)$root
+      else if(q >= 0.5) stats::uniroot({function(x) oCDF(x) - q}, lower = 0, upper = 10^80)$root
+      else (-1)*stats::uniroot({function(x) oCDF(x) - (1 - q)}, lower = 0, upper = 10^80)$root
     })
   }
 }

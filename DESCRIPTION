@@ -1,24 +1,25 @@
 Package: kendallRandomPackage
 Title: Import air pollution data from GIOS website, visualize applications of
-    Kendall random walk models.
+    Kendall random walk models
 Version: 0.0.0.9000
 Authors@R: person("Mateusz", "Staniak", email = "mateusz.staniak@math.uni.wroc.pl", role = c("aut", "cre"))
-Description: The package provides functions for importing data from .xlsx files
-    available on GIOŚ website to R-friendly format, calculate typical statistics and
-    visualize applications of Kendall random walk-related models.
-Depends:
-    R (>= 3.3.1)
-License: MIT
+Description: Kendall random walks are a continuous-space Markov chains generated
+             by the Kendall generalized convolution. This package provides tools
+             for simulating these random walks and studying distributions
+             related to them.
+Depends: R (>= 3.3.1)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    shiny,
     ggplot2,
     dplyr,
     tidyr,
-    readxl,
+    EnvStats,
+    tibble,
     lubridate
 RoxygenNote: 6.0.1
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
