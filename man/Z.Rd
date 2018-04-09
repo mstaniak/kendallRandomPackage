@@ -2,10 +2,18 @@
 % Please edit documentation in R/simulations.R
 \name{Z}
 \alias{Z}
-\title{Helper function}
+\title{Helper function: min/max}
 \usage{
 Z(x, y)
 }
+\arguments{
+\item{x}{numeric}
+
+\item{y}{numeric}
+}
+\value{
+min of arguments divided by max of arguments
+}
 \description{
-Helper function
+Helper function: min/max
 }

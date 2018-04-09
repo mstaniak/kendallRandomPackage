@@ -4,16 +4,18 @@
 \alias{simulation}
 \title{Simulate multiple trajectories of Kendall random walk}
 \usage{
-simulation(simulationNumber, trajectoryLength, stepDist, parAlpha, ...)
+simulation(number_of_simulations, trajectory_length, step_dist, alpha, ...)
 }
 \arguments{
-\item{simulationNumber}{number of trajectories to generate}
+\item{number_of_simulations}{number of trajectories to generate.}
 
-\item{trajectoryLength}{length of trajectories}
+\item{trajectory_length}{length of trajectories.}
 
-\item{stepDist}{function returning random numbers from step dist.}
+\item{step_dist}{function returning random numbers from step dist.}
 
-\item{parAlpha}{alpha parameter}
+\item{alpha}{alpha parameter.}
+
+\item{...}{parameters for step distribution.}
 }
 \description{
 Simulate multiple trajectories of Kendall random walk

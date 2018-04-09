@@ -1,13 +1,26 @@
-#' Helper function
+#' Helper function: min/max
+#'
+#' @param x numeric
+#' @param y numeric
+#'
+#' @return min of arguments divided by max of arguments
+#'
 
 Z <- function(x,y){
   min(x,y)/max(x,y)
 }
 
 #' Helper function
+#'
+#' @param x numeric
+#' @param y numeric
+#' @param alpha numeric, parameter of Kendall random walk
+#'
+#' @return 0 or 1 with probability depending on x, y, alpha
+#'
 
-Qn <- function(x, y, alfa){
-  p <- Z(abs(x), abs(y))^alfa
+Qn <- function(x, y, alpha){
+  p <- Z(abs(x), abs(y))^alpha
   sample(c(0,1), 1, prob=c(1-p, p))
 }
 
@@ -45,18 +58,19 @@ simulateOneTrajectory <- function(trajectory_length, step_dist,
 
 #' Simulate multiple trajectories of Kendall random walk
 #'
-#' @param simulationNumber number of trajectories to generate
-#' @param trajectoryLength length of trajectories
-#' @param stepDist function returning random numbers from step dist.
-#' @param parAlpha alpha parameter
+#' @param number_of_simulations number of trajectories to generate.
+#' @param trajectory_length length of trajectories.
+#' @param step_dist function returning random numbers from step dist.
+#' @param alpha alpha parameter.
+#' @param ... parameters for step distribution.
 #'
 
-simulation <- function(simulationNumber, trajectoryLength,
-                       stepDist, parAlpha, ...) {
-  listTmp <- as.list(1:simulationNumber)
+simulation <- function(number_of_simulations, trajectory_length,
+                       step_dist, alpha, ...) {
+  listTmp <- as.list(1:number_of_simulations)
   tmp <- lapply(listTmp, function(l)
-    simulateOneTrajectory(trajectoryLength, stepDist,
-                          parAlpha, ...))
+    simulateOneTrajectory(trajectory_length, step_dist,
+                          alpha, ...))
   lapply(listTmp,
          function(x) tibble::tibble(simNo = x, sim = tmp[[x]])) %>%
     dplyr::bind_rows()
@@ -66,36 +80,36 @@ simulation <- function(simulationNumber, trajectoryLength,
 #' Normalising Kendall random walks
 #'
 #' @param simulations tibble returned by simulation function
-#' @param AnSeq sequence that the trajectories will be multiplied by
-#' @param BnSeq sequence that will be substracted from scaled trajectory
+#' @param an_seq sequence that the trajectories will be multiplied by
+#' @param bn_seq sequence that will be substracted from scaled trajectory
 #'
 #' @return tibble
 #'
 
-normalisingSequences <- function(simulations, AnSeq = 1, BnSeq = 0) {
+normalising_sequences <- function(simulations, an_seq = 1, bn_seq = 0) {
   simulations %>%
     dplyr::mutate(simNo = as.factor(as.character(simNo))) %>%
     dplyr::group_by(simNo) %>%
-    dplyr::mutate(sim = AnSeq*sim - BnSeq)
+    dplyr::mutate(sim = an_seq*sim - bn_seq)
 }
 
 #' Draw simulated trajectories
 #'
-#' @param simulations tibble returned by normingSequences function
-#' @param ogrX maximum value on x axis
+#' @param simulations tibble returned by normalising_sequences function
+#' @param max_x maximum value on x axis
 #'
 #' @return ggplot2 object
 #'
 
-convergenceVis <- function(simulations, ogrX = NULL) {
+visualize_convergence <- function(simulations, max_x = NULL) {
   nSim <- max(unique(as.integer(as.character(simulations$simNo))))
-  trajectoryLength <- dim(simulations)[1]/nSim
-  if(is.null(ogrX)) ogrX <- trajectoryLength
+  trajectory_length <- dim(simulations)[1]/nSim
+  if(is.null(max_x)) max_x <- trajectory_length
 
    simulations %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(x = rep(1:trajectoryLength, nSim)) %>%
-    dplyr::filter(x <= ogrX) %>%
+    dplyr::mutate(x = rep(1:trajectory_length, nSim)) %>%
+    dplyr::filter(x <= max_x) %>%
     ggplot2::ggplot(aes(x = x, y = sim, group = simNo)) +
       ggplot2::geom_line() +
       ggplot2::theme_bw() +

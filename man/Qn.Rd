@@ -4,7 +4,17 @@
 \alias{Qn}
 \title{Helper function}
 \usage{
-Qn(x, y, alfa)
+Qn(x, y, alpha)
+}
+\arguments{
+\item{x}{numeric}
+
+\item{y}{numeric}
+
+\item{alpha}{numeric, parameter of Kendall random walk}
+}
+\value{
+0 or 1 with probability depending on x, y, alpha
 }
 \description{
 Helper function
