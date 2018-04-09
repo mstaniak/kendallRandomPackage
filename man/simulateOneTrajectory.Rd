@@ -12,6 +12,8 @@ simulateOneTrajectory(trajectory_length, step_dist, alpha, ...)
 \item{step_dist}{Function that returns random numbers from step distribution.}
 
 \item{alpha}{Alpha parameter of the random walk}
+
+\item{...}{Additional parameters to step distribution.}
 }
 \value{
 Generated path of the random walk.

@@ -36,6 +36,7 @@ U <- function(x, y){
 #' @param trajectory_length Number of samples to simulate.
 #' @param step_dist Function that returns random numbers from step distribution.
 #' @param alpha Alpha parameter of the random walk
+#' @param ... Additional parameters to step distribution.
 #'
 #' @return Generated path of the random walk.
 #'
