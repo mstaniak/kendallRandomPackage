@@ -2,18 +2,16 @@
 % Please edit documentation in R/fit_separately.R
 \name{estimate_alpha}
 \alias{estimate_alpha}
-\title{Estimate alpha parameter of stable Kendall distribution}
+\title{Optimize log-likelihood to find alpha parameter}
 \usage{
-estimate_alpha(data, m_alpha)
+estimate_alpha(data)
 }
 \arguments{
-\item{data}{numeric vector of observations}
-
-\item{m_alpha}{m_alpha function to be used}
+\item{data}{numeric vector of observation}
 }
 \value{
-estimated value of alpha parameter
+numeric
 }
 \description{
-Estimate alpha parameter of stable Kendall distribution
+Optimize log-likelihood to find alpha parameter
 }

@@ -1,16 +1,31 @@
-#' Estimate alpha parameter of stable Kendall distribution
+#' Log-likelihood for stable kendall distribution with m_alpha = 1
 #'
+#' @param alpha alpha parameter of the Kendall random walk
 #' @param data numeric vector of observations
-#' @param m_alpha m_alpha function to be used
 #'
-#' @return estimated value of alpha parameter
+#' @return numeric
+#'
+
+kendall_loglik <- function(alpha, data) {
+  data <- data[is.finite(data) & !is.na(data)]
+  length(data)*log(alpha) - (2*alpha + 1)*sum(log(data)) - sum(data^(-alpha))
+}
+
+
+#' Optimize log-likelihood to find alpha parameter
+#'
+#' @param data numeric vector of observation
+#'
+#' @return numeric
 #'
 #' @export
 #'
 
-estimate_alpha <- function(data, m_alpha) {
-  0.8 # TODO
+estimate_alpha <- function(data) {
+  data <- data[is.finite(data) & !is.na(data)]
+  optimize(f = kendall_loglik(),  x = data, interval = c(0, 1), maximum = TRUE)$maximum
 }
+
 
 #' Estimate location parameter of generalized stable Kendall distribution
 #'
