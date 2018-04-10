@@ -4,12 +4,12 @@
 \alias{kendall_loglik}
 \title{Log-likelihood for stable kendall distribution with m_alpha = 1}
 \usage{
-kendall_loglik(alpha, data)
+kendall_loglik(alpha, x)
 }
 \arguments{
 \item{alpha}{alpha parameter of the Kendall random walk}
 
-\item{data}{numeric vector of observations}
+\item{x}{numeric vector of observations}
 }
 \value{
 numeric
