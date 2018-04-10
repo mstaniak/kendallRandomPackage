@@ -24,7 +24,8 @@ kendall_loglik <- function(alpha, x) {
 estimate_alpha <- function(data) {
   data <- data[is.finite(data) & !is.na(data)]
   optimize(f = kendall_loglik,  x = data, interval = c(0, 1), maximum = TRUE)$maximum
-}
+}  # For m_alpha = 1 - case of delta_1 step distribution
+
 
 
 #' Estimate location parameter of generalized stable Kendall distribution
@@ -71,7 +72,11 @@ fit_kendall <- function(data, m_alpha, quantiles) {
   loc <- estimate_location(data)
   scale <- estimate_scale(data)
   quantiles_function <- qkend(m_alpha)
-  quantiles_function(quantiles, alpha, loc, scale)
+  fitted_quantiles <- quantiles_function(quantiles, alpha, loc, scale)
+  list(fitted = fitted_quantiles,
+       estimated_alpha = alpha,
+       estimated_location = loc,
+       estimated_scale = scale)
 }
 
 
@@ -99,11 +104,19 @@ fit_separate <- function(data, m_alpha, separation_point) {
   upper_quantiles <- all_quantiles[all_quantiles > separation_point]
   lower_dataset <- data[data <= separate]
   upper_dataset <- data[data > separate]
-  lower_fitted<- unlist(fit_kendall(lower_dataset, m_alpha, lower_quantiles),
+  all_lower_fit <- fit_kendall(lower_dataset, m_alpha, lower_quantiles)
+  all_upper_fit <- fit_kendall(upper_dataset, m_alpha, upper_quantiles)
+  lower_fitted<- unlist(all_lower_fit[[1]],
                         use.names = F)
-  upper_fitted <- unlist(fit_kendall(upper_dataset, m_alpha, upper_quantiles),
+  upper_fitted <- unlist(all_upper_fit[[1]],
                          use.names = F)
   quantiles <- unname(c(lower_fitted, upper_fitted))
-  data.frame(observed = sort(data),
-             fitted = quantiles)
+  list(fit = data.frame(observed = sort(data),
+                        fitted = quantiles),
+       fitted_params = list(alpha_lower = all_lower_fit[[2]],
+                            location_lower = all_lower_fit[[3]],
+                            scale_lower = all_lower_fit[[4]],
+                            alpha_upper = all_upper_fit[[2]],
+                            location_upper = all_upper_fit[[3]],
+                            scale_upper = all_upper_fit[[4]]))
 }
