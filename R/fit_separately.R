@@ -100,7 +100,7 @@ fit_separate <- function(data, m_alpha, separation_point) {
   lower_dataset <- data[data <= separate]
   upper_dataset <- data[data > separate]
   lower_fitted<- fit_kendall(lower_dataset, m_alpha, lower_quantiles)
-  upper_fitted <- kendall_quantiles(upper_dataset, m_alpha, upper_quantiles)
+  upper_fitted <- fit_kendall(upper_dataset, m_alpha, upper_quantiles)
   quantiles <- unname(c(lower_fitted, upper_fitted))
   data.frame(observed = sort(data),
              fitted = quantiles)
