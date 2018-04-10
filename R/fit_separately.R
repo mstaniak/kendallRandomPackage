@@ -1,14 +1,14 @@
 #' Log-likelihood for stable kendall distribution with m_alpha = 1
 #'
 #' @param alpha alpha parameter of the Kendall random walk
-#' @param data numeric vector of observations
+#' @param x numeric vector of observations
 #'
 #' @return numeric
 #'
 
-kendall_loglik <- function(alpha, data) {
-  data <- data[is.finite(data) & !is.na(data)]
-  length(data)*log(alpha) - (2*alpha + 1)*sum(log(data)) - sum(data^(-alpha))
+kendall_loglik <- function(alpha, x) {
+  x <- x[is.finite(x) & !is.na(x)]
+  length(x)*log(alpha) - (2*alpha + 1)*sum(log(x)) - sum(x^(-alpha))
 }
 
 
