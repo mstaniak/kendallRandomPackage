@@ -13,7 +13,7 @@ kendall_loglik <- function(alpha, data) {
 
 
 #' Optimize log-likelihood to find alpha parameter
-#'R/(obserwacje.shape[1])
+#'
 #' @param data numeric vector of observation
 #'
 #' @return numeric
@@ -67,9 +67,9 @@ estimate_scale <- function(data, m_alpha) {
 #'
 
 fit_kendall <- function(data, m_alpha, quantiles) {
-  alpha <- estimate_alpha(data, m_alpha)
-  loc <- estimate_location(data, m_alpha)
-  scale <- estimate_scale(data, m_alpha)
+  alpha <- estimate_alpha(data)
+  loc <- estimate_location(data)
+  scale <- estimate_scale(data)
   quantiles_function <- qkend(m_alpha)
   quantiles_function(quantiles, alpha, loc, scale)
 }
