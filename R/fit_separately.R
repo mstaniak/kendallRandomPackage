@@ -13,7 +13,7 @@ kendall_loglik <- function(alpha, data) {
 
 
 #' Optimize log-likelihood to find alpha parameter
-#'
+#'R/(obserwacje.shape[1])
 #' @param data numeric vector of observation
 #'
 #' @return numeric
@@ -23,7 +23,7 @@ kendall_loglik <- function(alpha, data) {
 
 estimate_alpha <- function(data) {
   data <- data[is.finite(data) & !is.na(data)]
-  optimize(f = kendall_loglik(),  x = data, interval = c(0, 1), maximum = TRUE)$maximum
+  optimize(f = kendall_loglik,  x = data, interval = c(0, 1), maximum = TRUE)$maximum
 }
 
 
