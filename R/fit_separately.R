@@ -120,3 +120,22 @@ fit_separate <- function(data, m_alpha, separation_point) {
                             location_upper = all_upper_fit[[3]],
                             scale_upper = all_upper_fit[[4]]))
 }
+
+
+#' Quick QQ-plot for the result of fitting two stable Kendall distributions.
+#'
+#' @param fit_list List returned by fit_separate function.
+#'
+#' @return ggplot2 object
+#'
+#' @export
+#'
+
+plot_qq <- function(fit_list) {
+  observed_vs_fitted <- fit_list$fit
+  ggplot(observed_vs_fitted, aes(x = observed, y = fitted)) +
+    theme_bw() +
+    xlab("Empirical") +
+    ylab("Theoretical quantile") +
+    geom_point()
+}
