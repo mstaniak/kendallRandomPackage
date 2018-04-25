@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_separately.R
 \name{estimate_alpha}
 \alias{estimate_alpha}
-\title{Optimize log-likelihood to find alpha parameter}
+\title{Optimize log-likelihood to find distribution parameters}
 \usage{
 estimate_alpha(data)
 }
@@ -10,8 +10,10 @@ estimate_alpha(data)
 \item{data}{numeric vector of observation}
 }
 \value{
-numeric
+Function of one argument of length 3 (alpha, location, scale)
+        which will be used to solve nonlinear system of equations
+        (find zeros of the derivative of log-likelihood).
 }
 \description{
-Optimize log-likelihood to find alpha parameter
+Optimize log-likelihood to find distribution parameters
 }
