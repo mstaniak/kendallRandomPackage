@@ -17,7 +17,8 @@ Imports:
     tidyr,
     EnvStats,
     tibble,
-    lubridate
+    lubridate,
+    nleqslv
 RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown,

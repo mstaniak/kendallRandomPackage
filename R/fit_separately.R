@@ -24,7 +24,7 @@ kendall_loglik <- function(alpha, x) {
 #'
 
 estimate_parameters <- function(data) {
-   function(parameters) {
+   fun <- function(parameters) {
      n <- length(data)
      c(n/parameters[1] +
          sum(log((data - parameters[2])/parameters[3])*
@@ -38,6 +38,7 @@ estimate_parameters <- function(data) {
 
      )
    }
+   nleqslv::nleqslv(c(0.6, 0, 1), fun)$x
 }
 
 #' Fit stable Kendall distribution for given data and m_alpha function.
@@ -52,9 +53,10 @@ estimate_parameters <- function(data) {
 #'
 
 fit_kendall <- function(data, m_alpha, quantiles) {
-  alpha <- estimate_alpha(data)
-  loc <- estimate_location(data)
-  scale <- estimate_scale(data)
+  to_estimate <- estimate_parameters(data)
+  alpha <- to_estimate[1]
+  loc <- to_estimate[2]
+  scale <- to_estimate_scale[3]
   quantiles_function <- qkend(m_alpha)
   fitted_quantiles <- quantiles_function(quantiles, alpha, loc, scale)
   list(fitted = fitted_quantiles,
