@@ -2,7 +2,7 @@
 
 export(addMultiKendall)
 export(dkend)
-export(estimate_alpha)
+export(estimate_parameters)
 export(fitMultiGEV)
 export(fit_kendall)
 export(fit_separate)

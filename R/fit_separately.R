@@ -23,7 +23,7 @@ kendall_loglik <- function(alpha, x) {
 #' @export
 #'
 
-estimate_alpha <- function(data) {
+estimate_parameters <- function(data) {
    function(parameters) {
      n <- length(data)
      c(n/parameters[1] +
