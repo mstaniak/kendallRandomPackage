@@ -12,48 +12,32 @@ kendall_loglik <- function(alpha, x) {
 }
 
 
-#' Optimize log-likelihood to find alpha parameter
+#' Optimize log-likelihood to find distribution parameters
 #'
 #' @param data numeric vector of observation
 #'
-#' @return numeric
+#' @return Function of one argument of length 3 (alpha, location, scale)
+#'         which will be used to solve nonlinear system of equations
+#'         (find zeros of the derivative of log-likelihood).
 #'
 #' @export
 #'
 
 estimate_alpha <- function(data) {
-  data <- data[is.finite(data) & !is.na(data)]
-  optimize(f = kendall_loglik,  x = data, interval = c(0, 1), maximum = TRUE)$maximum
-}  # For m_alpha = 1 - case of delta_1 step distribution
+   function(parameters) {
+     n <- length(data)
+     c(n/parameters[1] +
+         sum(log((data - parameters[2])/parameters[3])*
+               (((data - parameters[2])/parameters[3])^(-parameters[1]) - 2)),
+       (2*parameters[1] + 1)*sum(1/(data - parameters[2])) -
+         (parameters[3]^(-(parameters[1] + 2)))*
+         parameters[1]*sum((data - parameters[2])^(-(parameters[1] + 1))),
+       (2*n*parameters[1])/parameters[3] -
+         parameters[1]*((parameters[3])^(-parameters[1] - 1)) -
+         sum((data - parameters[2])^(-parameters[1]))
 
-
-
-#' Estimate location parameter of generalized stable Kendall distribution
-#'
-#' @param data numeric vector of observations
-#' @param m_alpha m_alpha function to be used
-#'
-#' @return estimated value of location parameter
-#'
-#' @export
-#'
-
-estimate_location <- function(data, m_alpha) {
-  0 # TODO
-}
-
-#' Estimate scale parameter of generalized stable Kendall distribution
-#'
-#' @param data numeric vector of observations
-#' @param m_alpha m_alpha function to be used
-#'
-#' @return estimated value of scale parameter
-#'
-#' @export
-#'
-
-estimate_scale <- function(data, m_alpha) {
-  1 # TODO
+     )
+   }
 }
 
 #' Fit stable Kendall distribution for given data and m_alpha function.
