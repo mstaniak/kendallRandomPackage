@@ -42,6 +42,27 @@ estimate_parameters <- function(data, initial_point) {
    nleqslv::nleqslv(initial_point, fun)$x
 }
 
+#' Negative loglikelihood for stable Kendall distr. with 3 parameters.
+#'
+#' @param data,
+#' @param parameters
+#'
+#' @return numeric, value of loglikelihood
+#'
+#' @export
+#'
+
+full_minus_loglik <- function(data, parameters) {
+  n <- length(data)
+  scaled <- (data - location)/scale
+  function(parameters) {
+    alpha <- parameters[1]
+    location <- parameters[2]
+    scale <- location[3]
+    (2*alpha + 1)*sum(log(scaled)) + sum(scaled^(-alpha)) + n*log(scale) - n*log(alpha)
+  }
+}
+
 #' Fit stable Kendall distribution for given data and m_alpha function.
 #'
 #' @param data Numeric vector of observation to which the distribution will be fitted.
