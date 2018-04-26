@@ -30,10 +30,10 @@ estimate_parameters <- function(data) {
          sum(log((data - parameters[2])/parameters[3])*
                (((data - parameters[2])/parameters[3])^(-parameters[1]) - 2)),
        (2*parameters[1] + 1)*sum(1/(data - parameters[2])) -
-         (parameters[3]^(-(parameters[1] + 2)))*
+         (parameters[3]^(parameters[1]))*
          parameters[1]*sum((data - parameters[2])^(-(parameters[1] + 1))),
        (2*n*parameters[1])/parameters[3] -
-         parameters[1]*((parameters[3])^(-parameters[1] - 1)) -
+         parameters[1]*((parameters[3])^(parameters[1] - 1)) -
          sum((data - parameters[2])^(-parameters[1]))
 
      )
