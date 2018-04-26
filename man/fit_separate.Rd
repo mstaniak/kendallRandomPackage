@@ -4,7 +4,7 @@
 \alias{fit_separate}
 \title{Function for fitting stable Kendall distribution separately to two parts of data}
 \usage{
-fit_separate(data, m_alpha, separation_point)
+fit_separate(data, m_alpha, separation_point, initial_points)
 }
 \arguments{
 \item{data}{Numeric vector. Observation to which the distribution will be fitted.}
@@ -12,6 +12,8 @@ fit_separate(data, m_alpha, separation_point)
 \item{m_alpha}{m_alpha function to be used}
 
 \item{separation_point}{Order above which data (quantiles) will be separated.}
+
+\item{initial_points}{Initial guesses for true parameters.}
 }
 \value{
 Empirical and estimated quantiles in a data frame.

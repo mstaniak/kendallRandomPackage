@@ -4,10 +4,12 @@
 \alias{estimate_parameters}
 \title{Optimize log-likelihood to find distribution parameters}
 \usage{
-estimate_parameters(data)
+estimate_parameters(data, initial_point)
 }
 \arguments{
-\item{data}{numeric vector of observation}
+\item{data}{numeric vector of observation.}
+
+\item{initial_point}{Initial guess for true parameters.}
 }
 \value{
 Function of one argument of length 3 (alpha, location, scale)

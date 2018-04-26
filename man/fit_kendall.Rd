@@ -4,7 +4,7 @@
 \alias{fit_kendall}
 \title{Fit stable Kendall distribution for given data and m_alpha function.}
 \usage{
-fit_kendall(data, m_alpha, quantiles)
+fit_kendall(data, m_alpha, quantiles, initial_point)
 }
 \arguments{
 \item{data}{Numeric vector of observation to which the distribution will be fitted.}
@@ -12,6 +12,8 @@ fit_kendall(data, m_alpha, quantiles)
 \item{m_alpha}{m_alpha function which will be used.}
 
 \item{quantiles}{vector of quantile range to be estimated.}
+
+\item{initial_point}{Initial guess for true parameters.}
 }
 \value{
 fitted quantiles
