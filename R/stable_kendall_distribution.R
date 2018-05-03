@@ -47,8 +47,10 @@ pkend <- function(m_alpha) {
   function(x, alpha, mu = 0, sigma = 1) {
     sapply(x, function(y) {
       if(!is.finite(y)) return(NA)
-      else if((y - mu)/sigma <= 0) 0
-      else (1 + m_alpha(alpha)*((y - mu)/sigma)^(-alpha))*exp(-m_alpha(alpha)*((y - mu)/sigma)^(-alpha))
+      else {
+        if((y - mu)/sigma <= 0) 0
+        else (1 + m_alpha(alpha)*((y - mu)/sigma)^(-alpha))*exp(-m_alpha(alpha)*((y - mu)/sigma)^(-alpha))
+        }
     })
   }
 }

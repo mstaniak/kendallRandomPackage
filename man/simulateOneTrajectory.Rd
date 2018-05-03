@@ -4,7 +4,8 @@
 \alias{simulateOneTrajectory}
 \title{Simulate one trajectory ofa Kendall random walk}
 \usage{
-simulateOneTrajectory(trajectory_length, step_dist, alpha, ...)
+simulateOneTrajectory(trajectory_length, step_dist, alpha, symmetric = FALSE,
+  ...)
 }
 \arguments{
 \item{trajectory_length}{Number of samples to simulate.}
@@ -12,6 +13,8 @@ simulateOneTrajectory(trajectory_length, step_dist, alpha, ...)
 \item{step_dist}{Function that returns random numbers from step distribution.}
 
 \item{alpha}{Alpha parameter of the random walk}
+
+\item{symmetric}{If TRUE, random walk on the whole real line will be simulated.}
 
 \item{...}{Additional parameters to step distribution.}
 }

@@ -44,15 +44,14 @@ estimate_parameters <- function(data, initial_point) {
 
 #' Negative loglikelihood for stable Kendall distr. with 3 parameters.
 #'
-#' @param data,
-#' @param parameters
+#' @param data Dataset for which the loglikelihood will be calculated.
 #'
 #' @return numeric, value of loglikelihood
 #'
 #' @export
 #'
 
-full_minus_loglik <- function(data, parameters) {
+full_minus_loglik <- function(data) {
   n <- length(data)
   scaled <- (data - location)/scale
   function(parameters) {

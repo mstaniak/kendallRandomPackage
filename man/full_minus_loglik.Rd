@@ -4,10 +4,10 @@
 \alias{full_minus_loglik}
 \title{Negative loglikelihood for stable Kendall distr. with 3 parameters.}
 \usage{
-full_minus_loglik(data, parameters)
+full_minus_loglik(data)
 }
 \arguments{
-\item{parameters}{}
+\item{data}{Dataset for which the loglikelihood will be calculated.}
 }
 \value{
 numeric, value of loglikelihood
