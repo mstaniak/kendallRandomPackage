@@ -1,3 +1,8 @@
+# kendallRandomPackage 0.9.1
+
+* Numerical computation of G function (so also Williamson transform)
+* Exact distribution of first ladder moments
+
 # kendallRandomPackage 0.9.0
 
 * Generic function for printing and plotting simulation objects

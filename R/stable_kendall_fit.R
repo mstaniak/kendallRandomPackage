@@ -148,3 +148,61 @@ plot_qq <- function(fit_list) {
     ylab("Theoretical quantile") +
     geom_point()
 }
+
+
+#' Fit stable Kendall distribution to multiple sets of observations
+#'
+#' @param srcFrame tibble returned by calculateMaxima function
+#' @param alpha value of alpha parameter
+#' @param normalise If TRUE, maximums will be scaled and centered.
+#' @param groupingVariables chr, vector of names of columns to group by,
+#'        year and polutant by default
+#' @param m_alpha function giving moment of order alpha of the step distribution
+#' @param symmetric if TRUE, symmetrical version of stable Kendall distribution will be used
+#'
+#' @return tibble with empirical CDF, theoretical CDF and theoretical quantiles.
+#'
+#' @export
+#'
+
+addMultiKendall <- function(srcFrame, alpha, normalise = FALSE,
+                            groupingVariables = c("year", "polutant"),
+                            m_alpha = function(x) x, symmetric = FALSE) {
+  if(symmetric) cdf <- pkendSym(m_alpha)
+  else cdf <- pkend(m_alpha)
+  tmp <- srcFrame %>%
+    dplyr::filter(is.finite(maximum)) %>%
+    dplyr::filter(length(unique(maximum)) > 2) %>%
+    dplyr::group_by_(.dots = groupingVariables) %>%
+    dplyr::arrange(maximum) %>%
+    dplyr::mutate(alphar_parameter = alpha)
+  if(normalise) {
+    tmp %>%
+      dplyr::mutate(maximum = as.numeric(scale(maximum))) %>%
+      dplyr::mutate(empirical = (1:n())/n(),
+                    theoretical = cdf(maximum, unique(alphar_parameter)))
+
+  } else {
+    tmp %>%
+      dplyr::mutate(empirical = (1:n())/n(),
+                    theoretical = cdf(maximum, unique(alphar_parameter)))
+
+  }
+}
+
+
+#' Compare theorical and empirical CDF for stable Kendall distribution.
+#'
+#' @param sourceFrame tibble returned by addMultiKendall()
+#'
+#' @return ggplot2 object
+#'
+
+cdfsKendall <- function(sourceFrame) {
+  sourceFrame %>%
+    tidyr::gather(CDF, value, theoretical, empirical) %>%
+    ggplot2::ggplot(aes(x = maximum, y = value, color = CDF)) +
+    ggplot2::geom_point() +
+    ggplot2::theme_bw() +
+    ggplot2::ylab("")
+}

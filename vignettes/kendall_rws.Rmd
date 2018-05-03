@@ -27,6 +27,13 @@ kendall_rws
 plot(kendall_rws)
 ```
 
+Symmetric 
+
+```{r example1.1}
+kendall_rws_sym <- simulate_kendall_rw(10, 100, rnorm, 0.76, T)
+kendall_rws_sym
+plot(kendall_rws_sym)
+```
 
 ## Barrier crossing
 
@@ -40,3 +47,20 @@ ladder_heights <- ladder_height(kendall_rws2, 2000)
 ladder_heights
 plot(ladder_heights)
 ```
+
+Exact first ladder moments distribution with $G(a)$ computed numerically. 
+
+```{r example3}
+y <- seq(10, 10000, 50)
+ladders <- sapply(y, 
+                  function(x) 
+                  ladder_moment_pdf(6, x, 0.5, pnorm, dnorm))
+plot(y, ladders)
+
+y <- seq(2000, 2200, 1)
+y <- 10000
+plot(y, sapply(y, function(x) g_function(x, 0.1, dnorm)$value))
+
+```
+
+
