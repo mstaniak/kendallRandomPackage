@@ -12,6 +12,22 @@ distributions. It also provides function to fit these distributions to data.
 }
 \section{Important functions}{
 
-\code{\link{simulation}} simulates Kendall random walks.
+\code{\link{simulate_kendall_rw}} simulates Kendall random walks.
+
+\code{\link{transform_kendall_rw}} applies scaling and shift to simulated Kendall r.w-s.
+
+\code{\link{ladder_moment}} estimates the distribution of first ladder moment
+by simulating Kendall random walks.
+
+\code{\link{ladder_height}} estimates the distribution of first ladder height
+by simulating Kendall random walks.
+
+\code{\link{ladder_moment_pmf}} computes the PMF of the distribution of first
+ladder moment.
+
+\code{\link{g_function}} Finds the value of G(t) numerically.
+
+\code{\link{pkend}}, \code{\link{dkend}}, \code{\link{qkend}}, \code{\link{rkend}}
+give CDF, PDF, quantile function and random numbers from stable Kendall distribution.
 }
 

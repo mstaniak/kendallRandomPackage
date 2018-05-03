@@ -7,6 +7,12 @@
 #'
 #' @export
 #'
+#' @examples {
+#' kendall_rw <- simulate_kendall_rw(100, 100, runif, 0.5)
+#' estim_ladder <- ladder_moment(kendall_rw, 1000)
+#' estim_ladder
+#' }
+#'
 
 ladder_moment <- function(simulations, level) {
   if(level < 0) stop("Level must be positive")
@@ -29,6 +35,12 @@ ladder_moment <- function(simulations, level) {
 #' @return tibble
 #'
 #' @export
+#'
+#' @examples {
+#'   kendall_rw <- simulate_kendall_rw(100, 100, runif, 0.5)
+#'   estim_ladder <- ladder_height(kendall_rw, 1000)
+#'   estim_ladder
+#' }
 #'
 
 ladder_height <- function(simulations, level) {
@@ -64,7 +76,6 @@ print.kendall_barier_crossing <- function(x, ...) {
   cat("Number of observations: ", max(x$sim_id), "\n")
   cat("Times the level was not crossed: ", sum(!is.finite(x$ladder_moment)), "\n")
   cat("Quantiles of the distribution: \n")
-  # cat(labels, "\n")
   print(quantiles)
   invisible(x)
 }

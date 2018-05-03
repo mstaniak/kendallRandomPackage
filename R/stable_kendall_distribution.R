@@ -6,12 +6,12 @@
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' dKend <- dkend(function(x) 1)
 #' # Step distribution: delta_{1}
 #' dKendall <- dKend(1:10, 0.5)
 #' # Values of PDF for arguments 1:10 and alpha = 0.5
-#' }
+#'
 #'
 
 dkend <- function(m_alpha) {
@@ -34,12 +34,12 @@ dkend <- function(m_alpha) {
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' pKend <- pkend(function(x) 1)
 #' # Step distribution: delta_{1}
 #' pKendall <- pKend(1:10, 0.5)
 #' # Values of CDF for arguments 1:10 and alpha = 0.5
-#' }
+#'
 #'
 
 pkend <- function(m_alpha) {
@@ -64,12 +64,12 @@ pkend <- function(m_alpha) {
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' qKend <- qkend(function(x) 1)
 #' # Step distribution: delta_{1}
 #' qKendall <- qKend(c(0.1, 0.9), 0.5)
 #' # Quantiles of order 0.1 and 0.9 for alpha = 0.5
-#' }
+#'
 #'
 
 qkend<- function(m_alpha) {
@@ -92,12 +92,12 @@ qkend<- function(m_alpha) {
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' rKend <- rkend(function(x) 1)
 #' # Step distribution: delta_{1}
 #' rKendall <- rKend(10, 0.5)
 #' # Ten random number from stable Kendall distribution with alpha = 0.5
-#' }
+#'
 #'
 
 
@@ -120,12 +120,12 @@ rkend <- function(m_alpha) {
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' pKend <- pkendSym(function(x) 1)
 #' # Step distribution: delta_{1}
 #' pKendall <- pKend(1:10, 0.5)
 #' # Values of CDF for arguments 1:10 and alpha = 0.5
-#' }
+#'
 #'
 
 pkendSym <- function(m_alpha) {
@@ -152,12 +152,12 @@ pkendSym <- function(m_alpha) {
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' qKend <- qkendSym(function(x) 1)
 #' # Step distribution: delta_{1}
 #' qKendall <- qKend(c(0.1, 0.9), 0.5)
 #' # Quantiles of order 0.1 and 0.9 for alpha = 0.5
-#' }
+#'
 #'
 
 qkendSym <- function(m_alpha) {

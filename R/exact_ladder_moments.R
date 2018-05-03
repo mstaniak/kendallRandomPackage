@@ -10,6 +10,10 @@
 #'
 #' @export
 #'
+#' @examples
+#' g_function(5, 0.75, rnorm)
+#'
+#'
 
 g_function <- function(t, alpha, density) {
   under_integral <- function(x) {
@@ -27,12 +31,17 @@ g_function <- function(t, alpha, density) {
 #' @param step_cdf CDF of the step distribution.
 #' @param step_pdf PDF of the step distribution.
 #'
-#' @return Value of CDF of the distribution of first ladder moment
+#' @return Value of PMF of the distribution of first ladder moment
 #'
 #' @export
 #'
+#' @examples
+#' prob <- ladder_moment_pmf(10, 1000, 0.5, pnorm, dnorm)
+#' prob
+#'
+#'
 
-ladder_moment_pdf <- function(n, level, alpha, step_cdf, step_pdf) {
+ladder_moment_pmf <- function(n, level, alpha, step_cdf, step_pdf) {
   Ga <- g_function(level, alpha, step_pdf)$value
   Fa <- step_cdf(level)
   Ha <- 2*Fa - 1 - Ga

@@ -19,3 +19,8 @@ Object of class "integrate"
 \description{
 Function G(t) - Williamson transform taken at point 1/t.
 }
+\examples{
+g_function(5, 0.75, rnorm)
+
+
+}

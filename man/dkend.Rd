@@ -16,11 +16,10 @@ function that returns values of the PDF
 PDF of Kendall stable distribution
 }
 \examples{
-{
 dKend <- dkend(function(x) 1)
 # Step distribution: delta_{1}
 dKendall <- dKend(1:10, 0.5)
 # Values of PDF for arguments 1:10 and alpha = 0.5
-}
+
 
 }

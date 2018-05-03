@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulations_kendall_rw.R
 \name{transform_kendall_rw}
 \alias{transform_kendall_rw}
-\title{Normalising Kendall random walks}
+\title{Transforming (scaling and shifting) Kendall random walks}
 \usage{
 transform_kendall_rw(simulations, an_seq = 1, bn_seq = 0)
 }
@@ -14,8 +14,17 @@ transform_kendall_rw(simulations, an_seq = 1, bn_seq = 0)
 \item{bn_seq}{sequence that will be substracted from scaled trajectory}
 }
 \value{
-tibble
+List like in simulate_kendall_rw function after transforming trajectories.
 }
 \description{
-Normalising Kendall random walks
+If one trajectory has length n, an_seq and bn_seq arguments should be sequnces of length n.
+Object returned by this function has plot and print methods.
+}
+\examples{
+kendall_simulations <- simulate_kendall_rw(10, 1000, runif, 0.5)
+scaled_kendall <- transform_kendall_rw(kendall_simulations, (1:1000)^(-2))
+scaled_kendall # kendall random walked scaled by the sequence n^(-1/alpha)
+scaled_data <- scaled_kendall$simulation # simulated values
+plot(scaled_kendall)
+
 }

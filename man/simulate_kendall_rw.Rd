@@ -20,6 +20,21 @@ simulate_kendall_rw(number_of_simulations, trajectory_length, step_dist, alpha,
 
 \item{...}{parameters for step distribution.}
 }
+\value{
+Object of class kendall_simulation. It is a list that consists of
+\item{simulation}{Tibble with simulation id and simulated values,}
+\item{step_distribution}{Name of the step distribution,}
+\item{alpha}{Value of alpha parameter,}
+\item{is_symmetric}{Logical value indicating if this is a symmetric Kendall R.W.}
+}
 \description{
-Simulate multiple trajectories of Kendall random walk
+Object returned by this has print and plot methods.
+}
+\examples{
+kendall_simulations <- simulate_kendall_rw(10, 1000, runif, 0.5)
+# Kendall R.W. on positive half-line with uniform step distribution - 10 trajectories.
+only_simulations <- kendall_simulations$simulation # tibble with simulated values
+kendall_simulations
+
+
 }

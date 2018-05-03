@@ -78,6 +78,8 @@ simulateOneTrajectory <- function(trajectory_length, step_dist,
 
 #' Simulate multiple trajectories of Kendall random walk
 #'
+#' Object returned by this has print and plot methods.
+#'
 #' @param number_of_simulations number of trajectories to generate.
 #' @param trajectory_length length of trajectories.
 #' @param step_dist function returning random numbers from step dist.
@@ -85,7 +87,20 @@ simulateOneTrajectory <- function(trajectory_length, step_dist,
 #' @param symmetric If TRUE, random walk on the whole real line will be simulated.
 #' @param ... parameters for step distribution.
 #'
+#' @return Object of class kendall_simulation. It is a list that consists of
+#' \item{simulation}{Tibble with simulation id and simulated values,}
+#' \item{step_distribution}{Name of the step distribution,}
+#' \item{alpha}{Value of alpha parameter,}
+#' \item{is_symmetric}{Logical value indicating if this is a symmetric Kendall R.W.}
+#'
 #' @export
+#'
+#' @examples
+#' kendall_simulations <- simulate_kendall_rw(10, 1000, runif, 0.5)
+#' # Kendall R.W. on positive half-line with uniform step distribution - 10 trajectories.
+#' only_simulations <- kendall_simulations$simulation # tibble with simulated values
+#' kendall_simulations
+#'
 #'
 
 simulate_kendall_rw <- function(number_of_simulations, trajectory_length,
@@ -107,15 +122,26 @@ simulate_kendall_rw <- function(number_of_simulations, trajectory_length,
 }
 
 
-#' Normalising Kendall random walks
+#' Transforming (scaling and shifting) Kendall random walks
+#'
+#' If one trajectory has length n, an_seq and bn_seq arguments should be sequnces of length n.
+#' Object returned by this function has plot and print methods.
+#'
 #'
 #' @param simulations tibble returned by simulation function
 #' @param an_seq sequence that the trajectories will be multiplied by
 #' @param bn_seq sequence that will be substracted from scaled trajectory
 #'
-#' @return tibble
+#' @return List like in simulate_kendall_rw function after transforming trajectories.
 #'
 #' @export
+#'
+#' @examples
+#' kendall_simulations <- simulate_kendall_rw(10, 1000, runif, 0.5)
+#' scaled_kendall <- transform_kendall_rw(kendall_simulations, (1:1000)^(-2))
+#' scaled_kendall # kendall random walked scaled by the sequence n^(-1/alpha)
+#' scaled_data <- scaled_kendall$simulation # simulated values
+#' plot(scaled_kendall)
 #'
 
 transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
