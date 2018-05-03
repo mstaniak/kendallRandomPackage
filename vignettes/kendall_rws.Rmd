@@ -1,0 +1,42 @@
+---
+title: "Kendall random walks"
+author: "Mateusz Staniak"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Kendall random walks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Simulate and plot
+
+```{r example1}
+# uzupelnic fig_captions, zeby dalo sie je zrobic
+library(kendallRandomPackage)
+kendall_rws <- simulate_kendall_rw(10, 100, runif, 0.25)
+kendall_rws
+plot(kendall_rws)
+```
+
+
+## Barrier crossing
+
+```{r example2}
+kendall_rws2 <- simulate_kendall_rw(1000, 100, runif, 0.25)
+ladder_moments <- ladder_moment(kendall_rws2, 1000)
+ladder_moments
+plot(ladder_moments)
+
+ladder_heights <- ladder_height(kendall_rws2, 2000)
+ladder_heights
+plot(ladder_heights)
+```

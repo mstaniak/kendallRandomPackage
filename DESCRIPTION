@@ -1,7 +1,7 @@
 Package: kendallRandomPackage
 Title: Import air pollution data from GIOS website, visualize applications of
     Kendall random walk models
-Version: 0.0.0.9000
+Version: 0.9.0
 Authors@R: person("Mateusz", "Staniak", email = "mateusz.staniak@math.uni.wroc.pl", role = c("aut", "cre"))
 Description: Kendall random walks are a continuous-space Markov chains generated
              by the Kendall generalized convolution. This package provides tools

@@ -97,7 +97,7 @@ simulate_kendall_rw <- function(number_of_simulations, trajectory_length,
                           alpha, symmetric, ...))
 
   result <- dplyr::bind_rows(lapply(listTmp,
-              function(x) tibble::tibble(simNo = x, sim = tmp[[x]])))
+              function(x) tibble::tibble(sim_id = x, sim = tmp[[x]])))
   simulation <- list(simulation = result,
                      step_distribution = as.character(substitute(step_dist))[1],
                      alpha = alpha,
@@ -120,8 +120,8 @@ simulate_kendall_rw <- function(number_of_simulations, trajectory_length,
 
 transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
   result <- mutate(simulations$simulation,
-                   simNo = as.factor(as.character(simNo)))
-  result <- group_by(result, simNo)
+                   simNo = as.factor(as.character(sim_id)))
+  result <- group_by(result, sim_id)
   result <- mutate(result, sim = an_seq*sim - bn_seq)
 
   simulations$simulation <- result
@@ -141,14 +141,15 @@ transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
 #'
 
 plot.kendall_simulation <- function(x, max_x = NULL, level = NULL, ...) {
-  nSim <- max(unique(as.integer(as.character(x$simulation$simNo))))
-  trajectory_length <- dim(x$simulation)[1]/nSim
+  n_sim <- max(unique(as.integer(as.character(x$simulation$sim_id))))
+  trajectory_length <- dim(x$simulation)[1]/n_sim
   if(is.null(max_x)) max_x <- trajectory_length
 
   to_plot <- dplyr::ungroup(x$simulation)
-  to_plot <- dplyr::mutate(to_plot, x = rep(1:trajectory_length, nSim))
+  to_plot <- dplyr::mutate(to_plot, x = rep(1:trajectory_length, n_sim))
   to_plot <- dplyr::filter(to_plot, x <= max_x)
-  plot_result <- ggplot2::ggplot(to_plot, aes(x = x, y = sim, group = simNo)) +
+  plot_result <- ggplot2::ggplot(to_plot,
+                                 ggplot2::aes(x = x, y = sim, group = sim_id)) +
     ggplot2::geom_line() +
     ggplot2::theme_bw() +
     ggplot2::xlab("") +
@@ -171,7 +172,7 @@ plot.kendall_simulation <- function(x, max_x = NULL, level = NULL, ...) {
 #'
 
 print.kendall_simulation <- function(x, ...) {
-  simulations_number <- max(as.numeric(as.character(x$simulation$simNo)))
+  simulations_number <- max(as.numeric(as.character(x$simulation$sim_id)))
   cat("Simulations of Kendall random walk \n")
   cat("Number of simulations: ", simulations_number, "\n")
   cat("Length of a single simulation: ", nrow(x$simulation)/simulations_number, "\n")
