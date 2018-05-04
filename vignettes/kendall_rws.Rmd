@@ -58,8 +58,7 @@ ladders <- sapply(y,
 plot(y, ladders)
 
 y <- seq(2000, 2200, 1)
-y <- 10000
-plot(y, sapply(y, function(x) g_function(x, 0.1, dnorm)$value))
+plot(y, g_function(y, 0.1, dnorm))
 
 ```
 
