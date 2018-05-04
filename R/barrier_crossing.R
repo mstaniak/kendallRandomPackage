@@ -1,5 +1,10 @@
 #' Estimate the distribution of first ladder moment for given level
 #'
+#' NA is returned if the level wasn't crossed. Printing the resulting object
+#' will give summary of the estimated distribution and information whether
+#' level wasn't crossed in some simulations. This information can be used to
+#' pick the right trajectory length for the given level.
+#'
 #' @param simulations kendall_simulation object
 #' @param level Positive numeric
 #'
@@ -21,15 +26,23 @@ ladder_moment <- function(simulations, level) {
   kendall_rw <- simulations$simulation
   kendall_rw <- dplyr::group_by(kendall_rw, sim_id)
   kendall_rw <- dplyr::mutate(kendall_rw, id = 1:n())
+  all_sims <- dplyr::ungroup(dplyr::distinct(kendall_rw, sim_id))
   kendall_rw <- dplyr::filter(kendall_rw, sim > level)
   kendall_rw <- dplyr::summarise(kendall_rw, ladder_moment = min(id))
   kendall_rw <- dplyr::ungroup(kendall_rw)
-  class(kendall_rw) <- c("kendall_barier_crossing", class(kendall_rw))
-  kendall_rw
+  all_sims <- left_join(all_sims, kendall_rw, by = "sim_id")
+
+  class(all_sims) <- c("kendall_barrier_crossing", class(all_sims))
+  all_sims
 }
 
 
 #' Estimate the distribution of first ladder height for given level
+#'
+#' NA is returned if the level wasn't crossed. Printing the resulting object
+#' will give summary of the estimated distribution and information whether
+#' level wasn't crossed in some simulations. This information can be used to
+#' pick the right trajectory length for the given level.
 #'
 #' @param simulations kendall_simulation object
 #' @param level Positive numeric
@@ -52,11 +65,15 @@ ladder_height <- function(simulations, level) {
   kendall_rw <- simulations$simulation
   kendall_rw <- dplyr::group_by(kendall_rw, sim_id)
   kendall_rw <- dplyr::mutate(kendall_rw, id = 1:n())
+  all_sims <- dplyr::ungroup(dplyr::distinct(kendall_rw, sim_id))
   kendall_rw <- dplyr::filter(kendall_rw, sim > level)
   kendall_rw <- dplyr::summarise(kendall_rw, ladder_moment = min(sim))
   kendall_rw <- dplyr::ungroup(kendall_rw)
-  class(kendall_rw) <- c("kendall_barier_crossing", class(kendall_rw))
-  kendall_rw
+  kendall_rw <- left_join(all_sims, kendall_rw, by = "sim_id")
+  all_sims <- left_join(all_sims, kendall_rw, by = "sim_id")
+
+  class(all_sims) <- c("kendall_barrier_crossing", class(all_sims))
+  all_sims
 }
 
 #' Generic function for printing result of ladder_moment function
@@ -71,7 +88,7 @@ ladder_height <- function(simulations, level) {
 #' @export
 #'
 
-print.kendall_barier_crossing <- function(x, ...) {
+print.kendall_barrier_crossing <- function(x, ...) {
   quantiles <- quantile(x$ladder_moment, na.rm = T,
                         probs = seq(0, 1, by = 0.1))
   labels <- names(quantiles)
@@ -95,7 +112,7 @@ print.kendall_barier_crossing <- function(x, ...) {
 #' @export
 #'
 
-plot.kendall_barier_crossing <- function(x, ...) {
+plot.kendall_barrier_crossing <- function(x, ...) {
   mean_value <- mean(x$ladder_moment)
   ggplot2::ggplot(x, ggplot2::aes(x = ladder_moment)) +
     ggplot2::geom_histogram() +

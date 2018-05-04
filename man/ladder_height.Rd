@@ -15,7 +15,10 @@ ladder_height(simulations, level)
 tibble
 }
 \description{
-Estimate the distribution of first ladder height for given level
+NA is returned if the level wasn't crossed. Printing the resulting object
+will give summary of the estimated distribution and information whether
+level wasn't crossed in some simulations. This information can be used to
+pick the right trajectory length for the given level.
 }
 \examples{
 {

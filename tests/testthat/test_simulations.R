@@ -28,3 +28,7 @@ testthat::test_that("Scaling does the right thing", {
 })
 
 
+testthat::test_that("S3 methods are fine", {
+  testthat::expect_silent(plot(symmetric_kendall_rw))
+  testthat::expect_output(print(symmetric_kendall_rw))
+})

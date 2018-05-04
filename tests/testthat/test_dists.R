@@ -15,6 +15,11 @@ testthat::test_that("Quantiles are computed correctly", {
                          tolerance = 1e-4)
 })
 
+testthat::test_that("S3 methods are fine", {
+  testthat::expect_silent(plot(moment))
+  testthat::expect_output(print(height))
+})
+
 testthat::test_that("Symmetric distribution is in fact symmetric", {
   testthat::expect_equal(pKendSym(-2, 0.5), 1 - pKendSym(2, 0.5),
                          tolerance = 1e-4)
