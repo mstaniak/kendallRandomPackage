@@ -5,6 +5,8 @@
 #'
 #' @return tibble
 #'
+#' @importFrom dplyr n
+#'
 #' @export
 #'
 #' @examples {
@@ -33,6 +35,8 @@ ladder_moment <- function(simulations, level) {
 #' @param level Positive numeric
 #'
 #' @return tibble
+#'
+#' @importFrom dplyr n
 #'
 #' @export
 #'

@@ -145,10 +145,10 @@ simulate_kendall_rw <- function(number_of_simulations, trajectory_length,
 #'
 
 transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
-  result <- mutate(simulations$simulation,
-                   simNo = as.factor(as.character(sim_id)))
-  result <- group_by(result, sim_id)
-  result <- mutate(result, sim = an_seq*sim - bn_seq)
+  result <- dplyr::mutate(simulations$simulation,
+                          simNo = as.factor(as.character(sim_id)))
+  result <- dplyr::group_by(result, sim_id)
+  result <- dplyr::mutate(result, sim = an_seq*sim - bn_seq)
 
   simulations$simulation <- result
   simulations

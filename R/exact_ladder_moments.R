@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' g_function(5, 0.75, rnorm)
+#' g_function(5, 0.75, dnorm)
 #'
 #'
 

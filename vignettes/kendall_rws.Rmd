@@ -54,7 +54,7 @@ Exact first ladder moments distribution with $G(a)$ computed numerically.
 y <- seq(10, 10000, 50)
 ladders <- sapply(y, 
                   function(x) 
-                  ladder_moment_pdf(6, x, 0.5, pnorm, dnorm))
+                  ladder_moment_pmf(6, x, 0.5, pnorm, dnorm))
 plot(y, ladders)
 
 y <- seq(2000, 2200, 1)

@@ -20,7 +20,7 @@ Object of class "integrate"
 Function G(t) - Williamson transform taken at point 1/t.
 }
 \examples{
-g_function(5, 0.75, rnorm)
+g_function(5, 0.75, dnorm)
 
 
 }

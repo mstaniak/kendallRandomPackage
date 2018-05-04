@@ -53,11 +53,11 @@ estimate_parameters <- function(data, initial_point) {
 
 full_minus_loglik <- function(data) {
   n <- length(data)
-  scaled <- (data - location)/scale
   function(parameters) {
     alpha <- parameters[1]
     location <- parameters[2]
     scale <- location[3]
+    scaled <- (data - location)/scale
     (2*alpha + 1)*sum(log(scaled)) + sum(scaled^(-alpha)) + n*log(scale) - n*log(alpha)
   }
 }
@@ -78,7 +78,7 @@ fit_kendall <- function(data, m_alpha, quantiles, initial_point) {
   to_estimate <- estimate_parameters(data, initial_point)
   alpha <- to_estimate[1]
   loc <- to_estimate[2]
-  scale <- to_estimate_scale[3]
+  scale <- to_estimate[3]
   quantiles_function <- qkend(m_alpha)
   fitted_quantiles <- quantiles_function(quantiles, alpha, loc, scale)
   list(fitted = fitted_quantiles,
@@ -142,67 +142,10 @@ fit_separate <- function(data, m_alpha, separation_point, initial_points) {
 
 plot_qq <- function(fit_list) {
   observed_vs_fitted <- fit_list$fit
-  ggplot(observed_vs_fitted, aes(x = observed, y = fitted)) +
-    theme_bw() +
-    xlab("Empirical") +
-    ylab("Theoretical quantile") +
-    geom_point()
-}
-
-
-#' Fit stable Kendall distribution to multiple sets of observations
-#'
-#' @param srcFrame tibble returned by calculateMaxima function
-#' @param alpha value of alpha parameter
-#' @param normalise If TRUE, maximums will be scaled and centered.
-#' @param groupingVariables chr, vector of names of columns to group by,
-#'        year and polutant by default
-#' @param m_alpha function giving moment of order alpha of the step distribution
-#' @param symmetric if TRUE, symmetrical version of stable Kendall distribution will be used
-#'
-#' @return tibble with empirical CDF, theoretical CDF and theoretical quantiles.
-#'
-#' @export
-#'
-
-addMultiKendall <- function(srcFrame, alpha, normalise = FALSE,
-                            groupingVariables = c("year", "polutant"),
-                            m_alpha = function(x) x, symmetric = FALSE) {
-  if(symmetric) cdf <- pkendSym(m_alpha)
-  else cdf <- pkend(m_alpha)
-  tmp <- srcFrame %>%
-    dplyr::filter(is.finite(maximum)) %>%
-    dplyr::filter(length(unique(maximum)) > 2) %>%
-    dplyr::group_by_(.dots = groupingVariables) %>%
-    dplyr::arrange(maximum) %>%
-    dplyr::mutate(alphar_parameter = alpha)
-  if(normalise) {
-    tmp %>%
-      dplyr::mutate(maximum = as.numeric(scale(maximum))) %>%
-      dplyr::mutate(empirical = (1:n())/n(),
-                    theoretical = cdf(maximum, unique(alphar_parameter)))
-
-  } else {
-    tmp %>%
-      dplyr::mutate(empirical = (1:n())/n(),
-                    theoretical = cdf(maximum, unique(alphar_parameter)))
-
-  }
-}
-
-
-#' Compare theorical and empirical CDF for stable Kendall distribution.
-#'
-#' @param sourceFrame tibble returned by addMultiKendall()
-#'
-#' @return ggplot2 object
-#'
-
-cdfsKendall <- function(sourceFrame) {
-  sourceFrame %>%
-    tidyr::gather(CDF, value, theoretical, empirical) %>%
-    ggplot2::ggplot(aes(x = maximum, y = value, color = CDF)) +
-    ggplot2::geom_point() +
+  ggplot2::ggplot(observed_vs_fitted, ggplot2::aes(x = observed, y = fitted)) +
     ggplot2::theme_bw() +
-    ggplot2::ylab("")
+    ggplot2::xlab("Empirical") +
+    ggplot2::ylab("Theoretical quantile") +
+    ggplot2::geom_point()
 }
+
