@@ -30,7 +30,7 @@ ladder_moment <- function(simulations, level) {
   kendall_rw <- dplyr::filter(kendall_rw, sim > level)
   kendall_rw <- dplyr::summarise(kendall_rw, ladder_moment = min(id))
   kendall_rw <- dplyr::ungroup(kendall_rw)
-  all_sims <- left_join(all_sims, kendall_rw, by = "sim_id")
+  all_sims <- dplyr::left_join(all_sims, kendall_rw, by = "sim_id")
 
   class(all_sims) <- c("kendall_barrier_crossing", class(all_sims))
   all_sims
@@ -69,8 +69,7 @@ ladder_height <- function(simulations, level) {
   kendall_rw <- dplyr::filter(kendall_rw, sim > level)
   kendall_rw <- dplyr::summarise(kendall_rw, ladder_moment = min(sim))
   kendall_rw <- dplyr::ungroup(kendall_rw)
-  kendall_rw <- left_join(all_sims, kendall_rw, by = "sim_id")
-  all_sims <- left_join(all_sims, kendall_rw, by = "sim_id")
+  all_sims <- dplyr::left_join(all_sims, kendall_rw, by = "sim_id")
 
   class(all_sims) <- c("kendall_barrier_crossing", class(all_sims))
   all_sims
