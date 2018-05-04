@@ -3,7 +3,7 @@ context("Check function related to Kendall random walk simulations")
 kendall_rw <- simulate_kendall_rw(10, 100, runif, 0.75)
 scaled_kendall <- transform_kendall_rw(kendall_rw, (1:100)^(-1/0.75))
 
-symmetric_kendall_rw <- simulate_kendall_rw(10, 100, rnorm, 0.25)
+symmetric_kendall_rw <- simulate_kendall_rw(10, 100, rnorm, 0.25, symmetric = T)
 scaled_symmetric <- transform_kendall_rw(symmetric_kendall_rw, (1:100)^(-1/0.25))
 
 testthat::test_that("Objects have the rights class", {
@@ -32,3 +32,4 @@ testthat::test_that("S3 methods are fine", {
   testthat::expect_silent(plot(symmetric_kendall_rw))
   testthat::expect_output(print(symmetric_kendall_rw))
 })
+
