@@ -46,4 +46,13 @@ testthat::test_that("S3 methods are fine", {
   testthat::expect_output(print(height))
 })
 
+testthat::test_that("G function types are correct", {
+  testthat::expect_is(g_function_single(0.25, 0.77, dnorm), "integrate")
+  testthat::expect_is(g_function(1:5, 0.24, dnorm), "numeric")
+})
+
+testthat::test_that("Ladder moment PMF is okay based on level = 0", {
+  testthat::expect_equal(ladder_moment_pmf(2, 0, 0.75, pnorm, dnorm), 0.25)
+})
+
 

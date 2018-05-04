@@ -1,5 +1,40 @@
 #' Function G(t) - Williamson transform taken at point 1/t.
 #'
+#' This function return the whole "integrate" object, so precision of the approximation
+#' can be checked.
+#'
+#' @param t Argument to the function.
+#' @param alpha Value of the alpha parameter.
+#' @param density Density function of the step distribution.
+#'
+#' @return Object of class "integrate"
+#'
+#' @importFrom stats integrate
+#'
+#' @examples
+#' g_function_single(5, 0.26, dnorm)
+#'
+#' @export
+#'
+
+g_function_single <- function(t, alpha, density) {
+  under_integral <- function(x) {
+    (1 - abs(x/t)^(alpha))*density(x)
+  }
+  if(t != 0) {
+    integrate(under_integral, lower = -abs(t), upper = abs(t))
+  } else {
+    fun <- function(x) x
+    integrate(fun, lower = -1, upper = 1)
+  }
+}
+
+
+#' Function G(t) - Williamson transform taken at point 1/t.
+#'
+#' This function return only approximated values. To check their precisions use
+#' g_function_single function with an argument of length 1.
+#'
 #' @param t Argument to the function.
 #' @param alpha Value of the alpha parameter.
 #' @param density Density function of the step distribution.
@@ -11,15 +46,12 @@
 #' @export
 #'
 #' @examples
-#' g_function(5, 0.75, dnorm)
+#' g_function(1:5, 0.75, dnorm)
 #'
 #'
 
 g_function <- function(t, alpha, density) {
-  under_integral <- function(x) {
-    (1 - abs(x/t)^(alpha))*density(x)
-  }
-  integrate(under_integral, lower = -abs(t), upper = abs(t))
+  sapply(t, function(x) g_function_single(x, alpha, density)$value)
 }
 
 
@@ -42,7 +74,7 @@ g_function <- function(t, alpha, density) {
 #'
 
 ladder_moment_pmf <- function(n, level, alpha, step_cdf, step_pdf) {
-  Ga <- g_function(level, alpha, step_pdf)$value
+  Ga <- g_function(level, alpha, step_pdf)
   Fa <- step_cdf(level)
   Ha <- 2*Fa - 1 - Ga
   A <- 1 + Ha/((2*Ga - 1)^2) - Ga/(2*Ga - 1)
