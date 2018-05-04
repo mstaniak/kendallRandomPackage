@@ -41,4 +41,9 @@ testthat::test_that("Bigger level implies greater mean of the distribution", {
 
 })
 
+testthat::test_that("S3 methods are fine", {
+  testthat::expect_silent(plot(moment))
+  testthat::expect_output(print(height))
+})
+
 
