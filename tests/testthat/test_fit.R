@@ -34,4 +34,5 @@ testthat::test_that("Fit happened", {
 
 testthat::test_that("Partial fit works", {
   testthat::expect_output(fit_separate(some_data, 0.5), regexp = NA)
+  testthat::expect_error(fit_separate(rep(NA, 5)))
 })
