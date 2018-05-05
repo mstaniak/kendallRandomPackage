@@ -90,6 +90,8 @@ qkend<- function(m_alpha) {
 #'
 #' @return function return n numbers genereted from Kendall stable dist.
 #'
+#' @importFrom stats rgamma
+#'
 #' @export
 #'
 #' @examples
