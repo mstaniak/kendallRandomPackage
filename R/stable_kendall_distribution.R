@@ -103,11 +103,8 @@ qkend<- function(m_alpha) {
 
 rkend <- function(m_alpha) {
   force(m_alpha)
-  qKend <- qkend(m_alpha)
-  function(n, alpha, mu = 0, sigma = 1) {
-    sapply(1:n, {function(x)
-      qKend(stats::runif(1, 0, 1), alpha, mu, sigma)
-    })
+  function(n, alpha) {
+    (rgamma(n, shape = 2, rate = m_alpha(alpha)))^(-1/alpha)
   }
 }
 

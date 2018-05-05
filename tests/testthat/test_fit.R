@@ -4,8 +4,8 @@ set.seed(17)
 rKend <- rkend(function(x) 1)
 some_data <- rKend(100, 0.7)
 
-fit_kend <- fit_kendall(some_data, function(x) 1, sort(runif(80)),
-                        initial_point = c(5, 0, 1))
+fit_kend <- suppressWarnings(fit_kendall(some_data, function(x) 1, sort(runif(80)),
+                        initial_point = c(5, 0, 1)))
 
 testthat::test_that("Fit happened", {
   testthat::expect_is(fit_kend, "list")

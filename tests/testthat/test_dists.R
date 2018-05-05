@@ -11,7 +11,6 @@ dens <- dKend(runif(10, 0, 10), 0.56)
 
 testthat::test_that("Support is on positive numbers", {
   testthat::expect_equal(pKend(c(-20, -10, 0), 0.5), rep(0, 3))
-
 })
 
 testthat::test_that("Quantiles are computed correctly", {
