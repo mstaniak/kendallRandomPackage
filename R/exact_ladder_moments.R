@@ -18,6 +18,7 @@
 #'
 
 g_function_single <- function(t, alpha, density) {
+  force(t)
   under_integral <- function(x) {
     (1 - abs(x/t)^(alpha))*density(x)
   }
