@@ -12,6 +12,10 @@ height  <- ladder_height(kendall_rw, 100)
 height2 <- ladder_height(kendall_rw, 200)
 symmetric_height <- ladder_height(symmetric_kendall_rw, 1000)
 
+testthat::test_that("Level must be positive", {
+  testthat::expect_error(ladder_moment(kendall_rw, -10))
+})
+
 testthat::test_that("Object have the right type", {
   testthat::expect_is(symmetric_moment, "tbl_df")
   testthat::expect_is(symmetric_moment, "kendall_barrier_crossing")

@@ -42,3 +42,7 @@ testthat::test_that("Density is okay", {
   testthat::expect_equal(dKend(1, 0.8), 0.8/exp(1))
 })
 
+testthat::test_that("Non-finite values are treated correctly", {
+  testthat::expect_true(all(is.na(c(pKend(NA, 0.5), qKend(NA, 0.5), pKendSym(NA, 0.5),
+                                  qKendSym(NA, 0.5), dKend(NA, 0.5)))))
+})
