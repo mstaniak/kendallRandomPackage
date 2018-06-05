@@ -53,7 +53,7 @@ diffs2 <- mutate_kendall_rw(walks, function(x) x - lag(x), F)
 plot(diffs2, max_id = 10)
 ```
 
-Długości skoków
+Długościczasu bez zmiany stanu
 
 ```{r skoki_dlugosc}
 diffs3 <- mutate_kendall_rw(diffs2, function(x) as.numeric(x != 0), F)
