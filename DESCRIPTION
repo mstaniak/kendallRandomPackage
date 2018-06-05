@@ -7,7 +7,7 @@ Description: Kendall random walks are a continuous-space Markov chains generated
              by the Kendall generalized convolution. This package provides tools
              for simulating these random walks and studying distributions
              related to them.
-Depends: R (>= 3.3.1)
+Depends: R (>= 3.3)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

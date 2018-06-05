@@ -1,0 +1,81 @@
+---
+title: "Studying the behaviour of Kendall random walks"
+author: "Mateusz Staniak"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Studying the behaviour of Kendall random walks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  warning = F, 
+  message = F,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+We will approximate the distribution of moments when the random walk changes state through simulations.
+
+First, we simulate many paths of Kendall random walk with normal step distribution.
+
+```{r sim}
+library(kendallRandomPackage)
+library(dplyr)
+library(ggplot2)
+set.seed(17)
+walks <- simulate_kendall_rw(1000, 1000, rnorm, 0.5, T)
+```
+
+Example trajectory
+
+```{r ex1}
+plot(walks, max_id = 1)
+```
+
+Liczba unikalnych wartości
+
+```{r unique}
+ggplot(summarise_kendall_rw(walks, n_distinct), aes(x = aggregated)) +
+  # geom_histogram() +
+  theme_bw() +
+  geom_density()
+```
+
+Skoki
+
+```{r jumps}
+diffs <- mutate_kendall_rw(walks, function(x) x - lag(x))
+diffs
+diffs2 <- mutate_kendall_rw(walks, function(x) x - lag(x), F)
+plot(diffs2, max_id = 10)
+```
+
+Długości skoków
+
+```{r skoki_dlugosc}
+diffs3 <- mutate_kendall_rw(diffs2, function(x) as.numeric(x != 0), F)
+diffs <- diffs3$simulation
+diffs <- group_by(diffs, sim_id) %>%
+  mutate(id = 1:n())
+lengths <- diffs %>%
+  filter(sim != 0) %>%
+  mutate(previous = ifelse(is.na(lag(id)), 0, lag(id))) %>%
+  mutate(length = id - previous)
+ggplot(subset(lengths, sim_id < 5), 
+       aes(x = length, fill = as.factor(sim_id), group = as.factor(sim_id))) +
+  geom_density() +
+  theme_bw() +
+  ggtitle("Rozkład długości czasu bez zmiany stanu wg numeru symulacji")
+ggplot(lengths, aes(x = length)) +
+  geom_density() +
+  theme_bw() +
+  ggtitle("Rozkład długości czasu bez zmiany stanu")
+ggplot(subset(lengths, sim_id < 10), aes(x = id, y = length, color = as.factor(sim_id))) +
+  geom_point() +
+  theme_bw() +
+  geom_line() +
+  ggtitle("Zmiana długości czasu bez zmiany stanu w czasie")
+```

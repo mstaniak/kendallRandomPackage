@@ -169,6 +169,7 @@ transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
 #'
 
 plot.kendall_simulation <- function(x, max_x = NULL, max_id = NULL, level = NULL, ...) {
+  sim_id <- NULL
   n_sim <- max(unique(as.integer(as.character(x$simulation$sim_id))))
   trajectory_length <- dim(x$simulation)[1]/n_sim
   if(is.null(max_x)) max_x <- trajectory_length
@@ -210,3 +211,46 @@ print.kendall_simulation <- function(x, ...) {
   cat("Alpha parameter: ", x$alpha)
   invisible(x)
 }
+
+#' Calculate some characteristic for every simulated instance.
+#'
+#' @param simulations Object of class kendall_simulation.
+#' @param summary_function Function that will be applied to each trajectory.
+#'
+#' @return data frame or a list (of class kendall_simulation)
+#'
+#' @export
+#'
+
+summarise_kendall_rw <- function(simulations, summary_function) {
+  with(simulations$simulation,
+         dplyr::group_by(simulations$simulation, sim_id) %>%
+           dplyr::summarise(aggregated = summary_function(sim)))
+}
+
+
+#' Mutate each trajectory.
+#'
+#' @param simulations Object of class kendall_simulation.
+#' @param mutate_function Function that will be applied to each trajectory.
+#' @param df If TRUE, a d.f will be returned, if FALSE, simulations in the kendall_simulation
+#'           object passed in simulations argument will be replaced by the result of mutate_function.
+#'
+#' @return data frame or a list (of class kendall_simulation)
+#'
+#' @export
+#'
+
+mutate_kendall_rw <- function(simulations, mutate_function, df = T) {
+  tmp <- with(simulations$simulation,
+           dplyr::group_by(simulations$simulation, sim_id) %>%
+             dplyr::mutate(sim = mutate_function(sim)))
+  if(df) {
+    tmp
+  } else {
+    simulations$simulation <- tmp
+    simulations
+  }
+
+}
+

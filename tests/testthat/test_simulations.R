@@ -36,7 +36,9 @@ testthat::test_that("S3 methods are fine", {
   testthat::expect_silent(plot(symmetric_kendall_rw, max_id = 1))
 })
 
-testthat::test_that("Summary function does the right thing", {
-
+testthat::test_that("Summary/mutate function does the right thing", {
+  testthat::expect_equal(unique(summarise_kendall_rw(symmetric_kendall_rw, length)$aggregated), 100)
+  testthat::expect_silent(mutate_kendall_rw(symmetric_kendall_rw, function(x) x^2))
+  testthat::expect_is(mutate_kendall_rw(symmetric_kendall_rw, function(x) x^2, F), "kendall_simulation")
 })
 
