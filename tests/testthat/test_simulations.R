@@ -32,5 +32,7 @@ testthat::test_that("S3 methods are fine", {
   testthat::expect_silent(plot(symmetric_kendall_rw))
   testthat::expect_silent(plot(symmetric_kendall_rw, level = 100))
   testthat::expect_output(print(symmetric_kendall_rw))
+  testhat::expect_silent(plot(symmetric_kendall_rw, max_x = 100))
+  testthat::expect_silent(plot(symmetric_kendall_rw, max_id = 1))
 })
 

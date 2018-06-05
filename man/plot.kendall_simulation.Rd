@@ -4,12 +4,15 @@
 \alias{plot.kendall_simulation}
 \title{Generic function that draws simulated trajectories of Kendall random walk}
 \usage{
-\method{plot}{kendall_simulation}(x, max_x = NULL, level = NULL, ...)
+\method{plot}{kendall_simulation}(x, max_x = NULL, max_id = NULL,
+  level = NULL, ...)
 }
 \arguments{
 \item{x}{object returned by normalising_sequences function.}
 
 \item{max_x}{maximum value on x axis.}
+
+\item{max_id}{Number of trajectories to plot. If NULL, all paths will be plotted.}
 
 \item{level}{Y-axis value which will be marked (level to be crossed).}
 

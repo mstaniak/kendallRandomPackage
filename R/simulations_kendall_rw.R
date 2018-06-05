@@ -159,6 +159,7 @@ transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
 #'
 #' @param x object returned by normalising_sequences function.
 #' @param max_x maximum value on x axis.
+#' @param max_id Number of trajectories to plot. If NULL, all paths will be plotted.
 #' @param level Y-axis value which will be marked (level to be crossed).
 #' @param ... Other arguments
 #'
@@ -167,14 +168,15 @@ transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
 #' @export
 #'
 
-plot.kendall_simulation <- function(x, max_x = NULL, level = NULL, ...) {
+plot.kendall_simulation <- function(x, max_x = NULL, max_id = NULL, level = NULL, ...) {
   n_sim <- max(unique(as.integer(as.character(x$simulation$sim_id))))
   trajectory_length <- dim(x$simulation)[1]/n_sim
   if(is.null(max_x)) max_x <- trajectory_length
+  if(is.null(max_id)) max_id <- n_sim
 
   to_plot <- dplyr::ungroup(x$simulation)
   to_plot <- dplyr::mutate(to_plot, x = rep(1:trajectory_length, n_sim))
-  to_plot <- dplyr::filter(to_plot, x <= max_x)
+  to_plot <- dplyr::filter(to_plot, x <= max_x, sim_id <= max_id)
   plot_result <- ggplot2::ggplot(to_plot,
                                  ggplot2::aes_string(x = 'x', y = 'sim',
                                                      group = 'sim_id')) +
