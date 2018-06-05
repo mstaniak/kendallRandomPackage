@@ -105,8 +105,8 @@ qkend<- function(m_alpha) {
 
 rkend <- function(m_alpha) {
   force(m_alpha)
-  function(n, alpha) {
-    (rgamma(n, shape = 2, rate = m_alpha(alpha)))^(-1/alpha)
+  function(n, alpha, mu = 0, sigma = 1) {
+    (sigma*rgamma(n, shape = 2, rate = m_alpha(alpha)) + mu)^(-1/alpha)
   }
 }
 

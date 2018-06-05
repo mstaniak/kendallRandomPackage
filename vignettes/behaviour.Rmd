@@ -35,7 +35,7 @@ Example trajectory
 plot(walks, max_id = 1)
 ```
 
-Liczba unikalnych wartości
+Number of unique states
 
 ```{r unique}
 ggplot(summarise_kendall_rw(walks, n_distinct), aes(x = aggregated)) +
@@ -44,7 +44,7 @@ ggplot(summarise_kendall_rw(walks, n_distinct), aes(x = aggregated)) +
   geom_density()
 ```
 
-Skoki
+Jumps
 
 ```{r jumps}
 diffs <- mutate_kendall_rw(walks, function(x) x - lag(x))
@@ -53,7 +53,7 @@ diffs2 <- mutate_kendall_rw(walks, function(x) x - lag(x), F)
 plot(diffs2, max_id = 10)
 ```
 
-Długościczasu bez zmiany stanu
+Time with no change of state
 
 ```{r skoki_dlugosc}
 diffs3 <- mutate_kendall_rw(diffs2, function(x) as.numeric(x != 0), F)
@@ -68,14 +68,14 @@ ggplot(subset(lengths, sim_id < 5),
        aes(x = length, fill = as.factor(sim_id), group = as.factor(sim_id))) +
   geom_density() +
   theme_bw() +
-  ggtitle("Rozkład długości czasu bez zmiany stanu wg numeru symulacji")
+  ggtitle("Distribution of time with no state-change (by simulation)")
 ggplot(lengths, aes(x = length)) +
   geom_density() +
   theme_bw() +
-  ggtitle("Rozkład długości czasu bez zmiany stanu")
+  ggtitle("Distribution of time with no state-change (aggregated)")
 ggplot(subset(lengths, sim_id < 10), aes(x = id, y = length, color = as.factor(sim_id))) +
   geom_point() +
   theme_bw() +
   geom_line() +
-  ggtitle("Zmiana długości czasu bez zmiany stanu w czasie")
+  ggtitle("Time with no state-change in time")
 ```
