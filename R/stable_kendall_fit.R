@@ -41,8 +41,8 @@ fit_stable_alpha <- function(data) {
   alpha_param <- estimate_stable_alpha(data)$maximum
   qKend <- qkend(function(x) 1)
   theoretical_quantiles <- qKend((1:length(data) - 0.5)/length(data), alpha_param)
-  fitted_list <- list(fit = tibble::tibble(observed = sort(data),
-                                           fitted = sort(theoretical_quantiles)),
+  fitted_list <- list(fit = tibble::tibble(observed_quantiles = sort(data),
+                                           fitted_quantiles = sort(theoretical_quantiles)),
                       params = list(alpha = alpha_param))
   class(fitted_list) <- c("kendall_fit", "list")
   fitted_list
@@ -122,8 +122,8 @@ fit_kendall <- function(data) {
   quantiles_function <- qkend(function(x) 1)
   fitted_quantiles <- quantiles_function((1:length(data) - 0.5)/length(data),
                                          alpha, loc, scale)
-  result <- list(fit = tibble::tibble(fitted = fitted_quantiles,
-                                      observed = sort(data)),
+  result <- list(fit = tibble::tibble(fitted_quantiles = fitted_quantiles,
+                                      observed_quantiles = sort(data)),
                  params = list(estimated_alpha = alpha,
                                estimated_location = loc,
                                estimated_scale = scale))
@@ -158,13 +158,13 @@ fit_separate <- function(data, separation_point) {
   upper_dataset <- data[data > separate]
   all_lower_fit <- fit_kendall(lower_dataset)
   all_upper_fit <- fit_kendall(upper_dataset)
-  lower_fitted<- unlist(all_lower_fit[[1]]$fitted,
+  lower_fitted<- unlist(all_lower_fit[[1]]$fitted_quantiles,
                         use.names = F)
-  upper_fitted <- unlist(all_upper_fit[[1]]$fitted,
+  upper_fitted <- unlist(all_upper_fit[[1]]$fitted_quantiles,
                          use.names = F)
   quantiles <- unname(c(lower_fitted, upper_fitted))
-  result <- list(fit = tibble::tibble(observed = sort(data),
-                            fitted = quantiles),
+  result <- list(fit = tibble::tibble(observed_quantiles = sort(data),
+                                      fitted_quantiles = quantiles),
        params = list(alpha_lower = all_lower_fit[[2]]$estimated_alpha,
                      location_lower = all_lower_fit[[2]]$estimated_location,
                      scale_lower = all_lower_fit[[2]]$estimated_scale,
@@ -188,7 +188,8 @@ fit_separate <- function(data, separation_point) {
 
 plot.kendall_fit <- function(x, ...) {
   observed_vs_fitted <- x$fit
-  ggplot2::ggplot(observed_vs_fitted, ggplot2::aes(x = observed, y = fitted)) +
+  ggplot2::ggplot(observed_vs_fitted, ggplot2::aes_string(x = 'observed_quantiles',
+                                                          y = 'fitted_quantiles')) +
     ggplot2::theme_bw() +
     ggplot2::xlab("Empirical") +
     ggplot2::ylab("Theoretical quantile") +

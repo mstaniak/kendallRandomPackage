@@ -145,6 +145,7 @@ simulate_kendall_rw <- function(number_of_simulations, trajectory_length,
 #'
 
 transform_kendall_rw <- function(simulations, an_seq = 1, bn_seq = 0) {
+  sim_id <- sim <- NULL
   result <- dplyr::mutate(simulations$simulation,
                           simNo = as.factor(as.character(sim_id)))
   result <- dplyr::group_by(result, sim_id)
@@ -175,7 +176,8 @@ plot.kendall_simulation <- function(x, max_x = NULL, level = NULL, ...) {
   to_plot <- dplyr::mutate(to_plot, x = rep(1:trajectory_length, n_sim))
   to_plot <- dplyr::filter(to_plot, x <= max_x)
   plot_result <- ggplot2::ggplot(to_plot,
-                                 ggplot2::aes(x = x, y = sim, group = sim_id)) +
+                                 ggplot2::aes_string(x = 'x', y = 'sim',
+                                                     group = 'sim_id')) +
     ggplot2::geom_line() +
     ggplot2::theme_bw() +
     ggplot2::xlab("") +

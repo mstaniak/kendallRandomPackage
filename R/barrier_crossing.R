@@ -23,6 +23,7 @@
 
 ladder_moment <- function(simulations, level) {
   if(level < 0) stop("Level must be positive")
+  sim <- id <- sim_id <- NULL
   kendall_rw <- simulations$simulation
   kendall_rw <- dplyr::group_by(kendall_rw, sim_id)
   kendall_rw <- dplyr::mutate(kendall_rw, id = 1:n())
@@ -62,6 +63,7 @@ ladder_moment <- function(simulations, level) {
 
 ladder_height <- function(simulations, level) {
   if(level < 0) stop("Level must be positive")
+  sim <- id <- sim_id <- NULL
   kendall_rw <- simulations$simulation
   kendall_rw <- dplyr::group_by(kendall_rw, sim_id)
   kendall_rw <- dplyr::mutate(kendall_rw, id = 1:n())
@@ -112,8 +114,8 @@ print.kendall_barrier_crossing <- function(x, ...) {
 #'
 
 plot.kendall_barrier_crossing <- function(x, ...) {
-  mean_value <- mean(x$ladder_moment)
-  ggplot2::ggplot(x, ggplot2::aes(x = ladder_moment)) +
+  mean_value <- mean(x$ladder_moment, na.rm = TRUE)
+  ggplot2::ggplot(x, ggplot2::aes_string(x = 'ladder_moment')) +
     ggplot2::geom_histogram() +
     ggplot2::geom_vline(xintercept = mean_value) +
     ggplot2::theme_bw() +
