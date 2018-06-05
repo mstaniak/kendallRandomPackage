@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 ```{r example1}
 # uzupelnic fig_captions, zeby dalo sie je zrobic
-library(kendallRandomPackage)
+library(kendallRandomWalks)
 kendall_rws <- simulate_kendall_rw(10, 100, runif, 0.25)
 kendall_rws
 plot(kendall_rws)

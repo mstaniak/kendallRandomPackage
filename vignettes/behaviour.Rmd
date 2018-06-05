@@ -22,7 +22,7 @@ We will approximate the distribution of moments when the random walk changes sta
 First, we simulate many paths of Kendall random walk with normal step distribution.
 
 ```{r sim}
-library(kendallRandomPackage)
+library(kendallRandomWalks)
 library(dplyr)
 library(ggplot2)
 set.seed(17)
