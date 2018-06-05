@@ -1,4 +1,4 @@
 library(testthat)
 library(kendallRandomWalks)
 
-test_check("kendallRandomPackage")
+test_check("kendallRandomWalks")
