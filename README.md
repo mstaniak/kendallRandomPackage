@@ -1,5 +1,6 @@
 # kendallRandomWalks
 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/kendallRandomWalks)](https://cran.r-project.org/package=kendallRandomWalks)
 [![Travis-CI Build Status](https://travis-ci.org/mstaniak/kendallRandomPackage.svg?branch=master)](https://travis-ci.org/mstaniak/kendallRandomPackage)
 [![Coverage Status](https://img.shields.io/codecov/c/github/mstaniak/kendallRandomPackage/master.svg)](https://codecov.io/github/mstaniak/kendallRandomPackage?branch=master)
 
