@@ -53,14 +53,14 @@ simulateOneTrajectory <- function(trajectory_length, step_dist,
                                   alpha, symmetric = FALSE, ...) {
   Y <- step_dist(trajectory_length, ...)
   if(symmetric) {
-    theta <- EnvStats::rpareto(trajectory_length,
-                               1,
-                               2*alpha)*sample(c(-1, 1),
+    theta <- actuar::rpareto1(trajectory_length,
+                              2*alpha,
+                              1)*sample(c(-1, 1),
                                                trajectory_length,
                                                prob = c(0.5, 0.5),
                                                replace = TRUE)
   } else {
-    theta <- EnvStats::rpareto(trajectory_length, 1, 2*alpha)
+    theta <- actuar::rpareto1(trajectory_length, 2*alpha, 1)
   }
 
   Xn <- vector("numeric", trajectory_length )
