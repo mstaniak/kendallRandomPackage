@@ -16,7 +16,7 @@ To get started, install stable CRAN version
 
 or the newest version from Github:
 
-> devtools::install_github("mstaniak/kendallRandomPackage")
+> devtools::install_github("mstaniak/kendallRandomWalks")
 
 Help:
 > ?kendallRandomPackage
