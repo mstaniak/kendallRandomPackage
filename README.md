@@ -16,10 +16,10 @@ To get started, install stable CRAN version
 
 or the newest version from Github:
 
-> devtools::install_github("mstaniak/kendallRandomWalks")
+> devtools::install_github("mstaniak/kendallRandomPackage")
 
 Help:
-> ?kendallRandomPackage
+> ?kendallRandomWalks
 
 Main functionalities:
 
