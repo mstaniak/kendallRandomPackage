@@ -1,11 +1,16 @@
-# kendallRandomPackagae 0.9.3
+# kendallRandomWalks 0.9.4
+
+* Print and plot methods for the result of summarise_kendall_rw function.
+
+# kendallRandomWalks 0.9.3
 
 * `EnvStats` dependency replaced by `actuar`.
 
-# kendallRandomPackage 0.9.2
+# kendallRandomWalks 0.9.2
 
 * Functions for transformations and summaries of simulations of Kendall random walks
   (`summarise_kendall_rw` and `mutate_kendall_rw`).
+* Name changed to kendallRandomWalks
   
 # kendallRandomPackage 0.9.1
 

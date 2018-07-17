@@ -12,7 +12,7 @@ summarise_kendall_rw(simulations, summary_function)
 \item{summary_function}{Function that will be applied to each trajectory.}
 }
 \value{
-data frame or a list (of class kendall_simulation)
+data frame of class "kendall_summary".
 }
 \description{
 Calculate some characteristic for every simulated instance.

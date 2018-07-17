@@ -217,15 +217,18 @@ print.kendall_simulation <- function(x, ...) {
 #' @param simulations Object of class kendall_simulation.
 #' @param summary_function Function that will be applied to each trajectory.
 #'
-#' @return data frame or a list (of class kendall_simulation)
+#' @return data frame of class "kendall_summary".
 #'
 #' @export
 #'
 
 summarise_kendall_rw <- function(simulations, summary_function) {
-  with(simulations$simulation,
-         dplyr::group_by(simulations$simulation, sim_id) %>%
-           dplyr::summarise(aggregated = summary_function(sim)))
+  sim_id <- NULL
+  sim <- NULL
+  result <- dplyr::group_by(simulations$simulation, sim_id)
+  result <- dplyr::summarise(result, aggregated = summary_function(sim))
+  class(result) <- c("kendall_summary", class(result))
+  result
 }
 
 
@@ -254,3 +257,50 @@ mutate_kendall_rw <- function(simulations, mutate_function, df = T) {
 
 }
 
+#' Plot summary of Kendall random walk simulations.
+#'
+#' @param x Object of class kendall_summary
+#' @param ... Optional arguments, currently ignored
+#' @param type Type of the plot: density, histogram or boxplot
+#'
+#' @export
+#'
+#' @import ggplot2
+#'
+#' @return ggplot2 object
+#'
+
+plot.kendall_summary <- function(x, ..., type  = "density") {
+  aggregated <- NULL
+
+  plot <- ggplot(x, aes(x = aggregated))
+
+  if(type == "density") {
+    plot + geom_density()
+  } else if(type == "histogram") {
+    plot + geom_histogram()
+  } else {
+    plot + geom_boxplot()
+  }
+}
+
+#' Print summary of Kendall random walk simulations.
+#'
+#' @param x Object of type kendall_summary
+#' @param ... Optional parameters, currently ignored
+#'
+#' @export
+#'
+
+print.kendall_summary <- function(x, ...) {
+  quantiles <- quantile(x$aggregated, na.rm = T,
+                        probs = seq(0, 1, by = 0.1))
+  labels <- names(quantiles)
+  cat("Mean of the distribution: ", mean(x$aggregated, na.rm = T), "\n")
+  cat("Standard deviation of the distribution: ", sd(x$aggregated, na.rm = T), "\n")
+  cat("Maximum of the distribution: ", max(x$aggregated, na.rm = T))
+  cat("Number of observations: ", nrow(x), "\n")
+  cat("Quantiles of the distribution: \n")
+  print(quantiles)
+  invisible(x)
+}

@@ -27,21 +27,27 @@ library(dplyr)
 library(ggplot2)
 set.seed(17)
 walks <- simulate_kendall_rw(1000, 1000, rnorm, 0.5, T)
+walks2 <- simulate_kendall_rw(1000, 1000, rcauchy, 0.5, T)
 ```
 
 Example trajectory
 
 ```{r ex1}
 plot(walks, max_id = 1)
+plot(walks2, max_id = 1)
 ```
+
 
 Number of unique states
 
 ```{r unique}
 ggplot(summarise_kendall_rw(walks, n_distinct), aes(x = aggregated)) +
-  # geom_histogram() +
   theme_bw() +
   geom_density()
+ggplot(summarise_kendall_rw(walks2, n_distinct), aes(x = aggregated)) +
+  theme_bw() +
+  geom_density()
+
 ```
 
 Jumps
