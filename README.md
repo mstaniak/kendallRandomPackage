@@ -38,6 +38,8 @@ If you have a feature request or you found a bug, please leave an issue.
 The goal of this package is to let anyone interested in Kendall convolution/generalized convolutions get familiar with them through visual means and experimentation and aid research in this area by providing tools for simulations. 
 
 
+NOTE: This project is waiting for a new maintainer. If you are interested, send a request via e-mail.
+
 Acknowledgement
 
 This work is a part of project "First order Kendall maximal autoregressive processes and their applications", which is carried out within the POWROTY/REINTEGRATION programme of the Foundation for Polish Science co-financed by the European Union under the European Regional Development Fund.
