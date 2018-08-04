@@ -4,8 +4,8 @@
 \alias{simulate_kendall_rw}
 \title{Simulate multiple trajectories of Kendall random walk}
 \usage{
-simulate_kendall_rw(number_of_simulations, trajectory_length, step_dist, alpha,
-  symmetric = FALSE, ...)
+simulate_kendall_rw(number_of_simulations, trajectory_length, step_dist,
+  alpha, symmetric = FALSE, ...)
 }
 \arguments{
 \item{number_of_simulations}{number of trajectories to generate.}

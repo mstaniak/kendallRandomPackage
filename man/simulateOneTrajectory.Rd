@@ -4,8 +4,8 @@
 \alias{simulateOneTrajectory}
 \title{Simulate one trajectory ofa Kendall random walk}
 \usage{
-simulateOneTrajectory(trajectory_length, step_dist, alpha, symmetric = FALSE,
-  ...)
+simulateOneTrajectory(trajectory_length, step_dist, alpha,
+  symmetric = FALSE, ...)
 }
 \arguments{
 \item{trajectory_length}{Number of samples to simulate.}

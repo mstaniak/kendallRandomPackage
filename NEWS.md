@@ -1,6 +1,7 @@
 # kendallRandomWalks 0.9.4
 
 * Print and plot methods for the result of summarise_kendall_rw function.
+* Finished vignettes.
 
 # kendallRandomWalks 0.9.3
 

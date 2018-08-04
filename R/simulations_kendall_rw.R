@@ -257,6 +257,7 @@ mutate_kendall_rw <- function(simulations, mutate_function, df = T) {
 
 }
 
+
 #' Plot summary of Kendall random walk simulations.
 #'
 #' @param x Object of class kendall_summary
@@ -273,7 +274,8 @@ mutate_kendall_rw <- function(simulations, mutate_function, df = T) {
 plot.kendall_summary <- function(x, ..., type  = "density") {
   aggregated <- NULL
 
-  plot <- ggplot(x, aes(x = aggregated))
+  plot <- ggplot(x, aes(x = aggregated)) +
+    theme_bw()
 
   if(type == "density") {
     plot + geom_density()
